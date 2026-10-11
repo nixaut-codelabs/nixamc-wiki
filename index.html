@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NixaMC Wiki</title>
+<meta name="description" content="NixaMC Survival RPG sunucu rehberi: sınıflar, komutlar, tarifler.">
+<style>
+:root{--bg:#101013;--surface:#16161a;--card:#1c1c21;--card-h:#222228;--subtle:#26262d;--border:#27272e;--border-h:#3e3e48;--tp:#ededf0;--ts:#9ea0a8;--tt:#6f717a;--acc:#ffffff;--acc-c:#0a0a0c;--r-sm:6px;--r-md:8px;--r-lg:12px;--sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tp);font-family:var(--sans);margin:0;line-height:1.65}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.4;background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:25px 25px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%)}
+.wrap{max-width:920px;margin:auto;padding:0 20px 60px;position:relative}
+nav{position:sticky;top:0;z-index:10;background:rgba(16,16,19,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+nav .in{max-width:920px;margin:auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:18px;overflow-x:auto}
+nav b{font-size:15px;white-space:nowrap}nav a{color:var(--ts);text-decoration:none;font-size:14px;white-space:nowrap}nav a:hover{color:var(--tp)}
+.hero{padding:72px 0 8px;max-width:640px}
+.hero h1{font-size:clamp(30px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:var(--ts);margin:0 0 22px;max-width:52ch}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-size:14px;font-weight:600;border-radius:var(--r-md);padding:10px 18px;cursor:pointer;border:1px solid transparent;transition:transform .15s var(--ease),background .15s var(--ease),border-color .15s}
+.btn:active{transform:scale(.98)}
+.btn-p{background:var(--acc);color:var(--acc-c)}.btn-p:hover{background:#e0e0e5}
+.btn-s{background:var(--surface);color:var(--tp);border-color:var(--border)}.btn-s:hover{border-color:var(--border-h)}
+.ipbox{font-family:var(--mono);font-size:15px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 16px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h2{font-size:22px;margin:44px 0 4px;letter-spacing:-.01em}
+.sub{color:var(--tt);font-size:14px;margin:0 0 14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;margin:12px 0;transition:transform .18s var(--ease),border-color .18s var(--ease),background .18s var(--ease)}
+.card:hover{transform:translateY(-3px);border-color:var(--border-h);background:var(--card-h)}
+.card img{max-width:100%;border-radius:var(--r-md);display:block}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}
+th{color:var(--tt);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+code{font-family:var(--mono);font-size:.92em;background:var(--subtle);padding:2px 8px;border-radius:var(--r-sm)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}.hero{padding-top:48px}}
+.muted{color:var(--ts)}.tiny{color:var(--tt);font-size:13px}
+footer{color:var(--tt);font-size:13px;margin-top:48px;border-top:1px solid var(--border);padding-top:16px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}body::before{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="in"><b>NixaMC Wiki</b><a href="#baglan">Bağlan</a><a href="#sinif">Sınıflar</a><a href="#komut">Komutlar</a><a href="#ciftlik">Çiftlik</a><a href="#sistem">Sistemler</a><a href="#sss">SSS</a></div></nav>
+<div class="wrap">
+
+<header class="hero">
+<h1>Survival RPG sunucu rehberi</h1>
+<p>Sınıflar, komutlar ve tarifler tek sayfada. Crack ve premium giriş açık, 1.16 ile 1.21.11 arası tüm sürümler girebilir.</p>
+<div class="btnrow"><button class="btn btn-p" id="copyIp">IP Adresini Kopyala</button><a class="btn btn-s" href="#sinif" style="text-decoration:none;display:inline-block">Sınıflara bak</a></div>
+<div class="ipbox"><span id="ipText">91.98.80.233:25678</span><span class="tiny">Java ve Bedrock, aynı adres</span></div>
+</header>
+
+<h2 id="baglan">Bağlanma</h2>
+<p class="sub">İlk girişte kayıt, sonrasında şifreli giriş.</p>
+<div class="card"><code>/register şifre şifre</code> ile kaydol, her girişte <code>/login şifre</code> yaz. Sunucuya yalnızca Türkiye çıkışlı bağlantılar kabul edilir.</div>
+
+<h2 id="sinif">Sınıflar</h2>
+<p class="sub">Menü: <code>/sinif</code>. Eşyalar 24 saatte bir alınır, pasifler sınıf değişene kadar kalıcıdır.</p>
+<div class="card"><table><tr><th>Sınıf</th><th>Kit</th><th>Kalıcı pasif</th></tr>
+<tr><td>Savaşçı</td><td>Keskinlik II kılıç, demir set, kalkan</td><td>Direnç I</td></tr>
+<tr><td>Okçu</td><td>Güç II yay, 64 ok, zincir set</td><td>Hız I</td></tr>
+<tr><td>Büyücü</td><td>Alev Asa, Kadim Alev, deri set</td><td>Ateş Direnci, Gece Görüşü</td></tr>
+<tr><td>Suikastçı</td><td>Keskinlik I hançer, deri set</td><td>Gece Görüşü, Zıplama I</td></tr>
+<tr><td>Madenci</td><td>Verimlilik II kazma, demir set, fırın</td><td>Acele I, Gece Görüşü</td></tr></table></div>
+<div class="card muted">Ölüm veya süt efektleri siler. <code>/sinif</code> menüsündeki Yenile butonu eşya vermeden pasifi geri yükler.</div>
+
+<h2 id="komut">Komutlar</h2>
+<p class="sub">En çok kullanılanlar.</p>
+<div class="card"><table><tr><th>Komut</th><th>İşlev</th></tr>
+<tr><td><code>/skills</code></td><td>Yetenek ağacı ve perkler</td></tr>
+<tr><td><code>/sethome &lt;ad&gt;</code>, <code>/home &lt;ad&gt;</code></td><td>Ev kaydet ve git (3 adet)</td></tr>
+<tr><td><code>/spawn</code></td><td>Doğma noktası</td></tr>
+<tr><td><code>/tpa &lt;oyuncu&gt;</code></td><td>Işınlanma isteği</td></tr>
+<tr><td><code>/graves list</code>, <code>/grave tp</code></td><td>Mezarları listele, son mezara git</td></tr>
+<tr><td><code>/backpack</code></td><td>Sırt çantası</td></tr>
+<tr><td><code>/skin &lt;isim&gt;</code></td><td>Görünüm değiştir</td></tr>
+<tr><td><code>/party</code></td><td>Parti kurma ve TP paylaşımı</td></tr>
+<tr><td><code>/papi parse me %valhallammo_skillpoints%</code></td><td>Yetenek puanı sorgulama</td></tr></table></div>
+
+<h2 id="ciftlik">Çiftlik tarifleri</h2>
+<p class="sub">Tohumlar ot kırınca düşer. Tohumu çapalanmış toprağa ek, büyüyünce kır. Bir mahsulden iki tohum çıkar.</p>
+<div class="grid2">
+<div class="card"><img src="img/tohum_domates.png" alt="Domates Tohumu tarifi"></div>
+<div class="card"><img src="img/yemek_corb.png" alt="Domates Çorbası tarifi"></div>
+<div class="card"><img src="img/yemek_pizza.png" alt="Pizza Dilimi tarifi"></div>
+<div class="card"><img src="img/yemek_turta.png" alt="Elmalı Turta tarifi"></div>
+<div class="card"><img src="img/yemek_salata.png" alt="Meyve Salatası tarifi"></div>
+<div class="card"><img src="img/ek_kasif.png" alt="Kaşif Bıçağı tarifi"></div>
+<div class="card"><img src="img/ek_safak.png" alt="Şafak Kılıcı tarifi"></div>
+<div class="card"><img src="img/ek_tirpan.png" alt="Çiftçi Tırpanı tarifi"></div>
+</div>
+<div class="card muted">Özel dönüşümler: Gezgin Kılıcı (demir kılıç ve domates), Madenci Çekici (demir kazma ve demir blok, 3x3 kazar). Oltayla yüzde 6 hazine, zindan sandıklarında yüzde 25 özel eşya bulunur.</div>
+
+<h2 id="sistem">Sistemler</h2>
+<div class="card"><table><tr><th>Sistem</th><th>Özet</th></tr>
+<tr><td>Ekonomi</td><td>100 birimle başlanır, sandıklara fiyat konularak dükkan açılır</td></tr>
+<tr><td>Claim</td><td>Altın kürekle alan koruma, sandık otomatik claim yapmaz</td></tr>
+<tr><td>Mezar</td><td>Eşyalar 5 dakika mezarda kalır, yalnızca sahibi açar</td></tr>
+<tr><td>Sesli sohbet</td><td>Yakınlık bazlı konuşma</td></tr>
+<tr><td>Uyku</td><td>Dört kişiden biri yatınca sabah olur</td></tr>
+<tr><td>Koruma</td><td>Hile koruması, bölge kilidi ve VPN engeli aktiftir</td></tr></table></div>
+
+<h2 id="sss">SSS</h2>
+<div class="card"><b>Dokular mor siyah görünüyor.</b><br><span class="muted">Çıkıp tekrar gir, pack girişte yüklenir.</span></div>
+<div class="card"><b>Efektim gitti.</b><br><span class="muted">Ölüm ve süt siler, <code>/sinif</code> menüsünden Yenile düğmesine bas.</span></div>
+<div class="card"><b>Pack zorunlu mu?</b><br><span class="muted">Evet, kabul etmeden giriş yapılamaz.</span></div>
+
+<footer>NixaMC Survival RPG. Bu sayfadaki IP ve komutlar günceldir.</footer>
+</div>
+<script>
+document.getElementById('copyIp').addEventListener('click',function(){
+var t=document.getElementById('ipText').textContent.trim(),b=this;
+function done(ok){b.textContent=ok?'Kopyalandı':'Kopyalanamadı';setTimeout(function(){b.textContent='IP Adresini Kopyala'},1600)}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){done(true)},function(){done(false)})}
+else{var i=document.createElement('input');i.value=t;document.body.appendChild(i);i.select();try{document.execCommand('copy');done(true)}catch(e){done(false)}i.remove()}
+});
+</script>
+</body>
+</html>
