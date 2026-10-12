@@ -341,6 +341,40 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important;animation:none!important}
 }
+
+/* --- Canli oyuncu kenar cubugu (sadece kisi bilgisi, IP YOK) --- */
+.sidebar{position:fixed;top:84px;right:max(16px,calc((100vw - var(--maxw))/2 - 280px));width:248px;z-index:40;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-5);display:none}
+@media(min-width:1500px){.sidebar{display:block}}
+.sb-title{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:var(--space-4)}
+.sb-dot{width:8px;height:8px;border-radius:50%;background:var(--faint);flex:none}
+.sb-dot.on{background:#7ec97e;box-shadow:0 0 8px rgba(126,201,126,.6)}
+.sb-count{font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--text);line-height:1.1}
+.sb-count small{font-size:12px;font-weight:400;color:var(--muted)}
+.sb-list{list-style:none;margin:var(--space-4) 0 0;padding:0;display:flex;flex-direction:column;gap:2px;
+  max-height:260px;overflow-y:auto}
+.sb-list li{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;
+  padding:3px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-list li img{width:16px;height:16px;image-rendering:pixelated;flex:none;background:var(--inset);border-radius:3px}
+.sb-more{font-size:12px;color:var(--faint);margin-top:6px;padding-left:0}
+.sb-state{font-size:13px;color:var(--faint);margin-top:var(--space-3)}
+.sb-note{margin-top:var(--space-4);padding-top:var(--space-3);border-top:1px solid var(--border);
+  font-size:11px;color:var(--faint);line-height:1.5}
+/* --- Ilerleme zinciri gorseli --- */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:var(--space-4)}
+.chain-node{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:8px 14px;font-size:13px;color:var(--text)}
+.chain-node small{display:block;color:var(--faint);font-size:11px;font-family:var(--mono)}
+.chain-arrow{color:var(--faint);font-family:var(--mono)}
+/* --- Alt reklam (IP'siz) --- */
+.ad-box{background:linear-gradient(180deg,var(--card) 0%,var(--surface) 100%);
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-7) var(--space-6);text-align:center;margin:0 auto var(--space-7);max-width:720px}
+.ad-box h3{font-size:clamp(20px,3vw,26px);font-weight:650;letter-spacing:-.01em;margin-bottom:8px}
+.ad-box p{color:var(--muted);max-width:560px;margin:0 auto var(--space-5);font-size:14px}
+.ad-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:var(--space-5)}
 </style>
 </head>
 <body>
@@ -360,6 +394,9 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
       <a href="#rpg">RPG</a>
       <a href="#komutlar">Komutlar</a>
       <a href="#kurallar">Kurallar</a>
+      <a href="#dunya">Dünya</a>
+      <a href="#etkinlik">Etkinlik</a>
+      <a href="#yetenekler">Yetenekler</a>
       <a href="#sss">SSS</a>
     </div>
     <button class="nav-ip" data-copy="91.98.80.233:25678" title="IP adresini kopyala">91.98.80.233:25678</button>
@@ -817,9 +854,145 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
 </section>
 
 <!-- 09 KOMUTLAR -->
+
+<!-- 12 DÜNYA: SEVIYE SISTEMI + BOSS + BALIKCILIK -->
+<section id="dunya">
+  <div class="sec-head">
+    <span class="sec-idx">09 / Dünya</span>
+    <h2>Uzaklaştıkça ve derinleştikçe dünya sertleşir</h2>
+    <p>Sunucudaki canavarlar sabit seviyeli değil. Seviyeleri iki şeye bağlı: doğuş noktasından ne kadar uzaklaştığın ve ne kadar derine indiğin. Uzak ve derin bölgeler tehlikeli ama çok daha ödüllendiricidir.</p>
+  </div>
+  <div class="grid g3">
+    <div class="card">
+      <h3>Seviye sistemi</h3>
+      <p>İki etken birlikte çalışır: <b>mesafe</b> (doğuş noktasından uzaklaştıkça her 250 blokta seviye artar) ve <b>derinlik</b> (Y=62'nin altına indikçe her 6 blokta seviye yükselir). Oyuncunun kendi seviyesi de canavar seviyesini bir miktar yukarı çeker.</p>
+      <div class="kv" style="margin-top:var(--space-4)">
+        <span>Doğuş çevresi</span><b>Seviye 1-4</b>
+        <span>2.500 blok dışı</span><b>Seviye ~14</b>
+        <span>Uzak + derin</span><b>Seviye 45-48</b>
+        <span>Nether</span><b>Ayrı kural</b>
+      </div>
+      <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">Doğuş bölgesi bilinçli olarak güvenli tutulur; yeni başlayanlar için canavarlar zayıftır.</p>
+    </div>
+    <div class="card">
+      <h3>BOSS canavarlar · Seviye 25+</h3>
+      <p>Seviyesi <b>25 ve üzerine</b> çıkan canavarlar <span style="color:var(--r-epic);font-weight:650">⚔ BOSS ⚔</span> adıyla parlar: <b>%50 fazla can</b>, <b>%40 fazla hasar</b>.</p>
+      <p style="margin-top:var(--space-3)"><b>Nerede bulunur:</b> doğuş noktasından <b>2.000+ blok</b> uzaklaş ve derin mağaralara in (<b>Y ≤ -50</b>). Bu bölgede canavarlar seviye 45 civarına çıkar, yani BOSS garantidir. Yalnızca derine inmek ya da yalnızca uzaklaşmak yetmez; ikisi birlikte gerekir.</p>
+      <p style="margin-top:var(--space-3)">Bir BOSS'u kendi elinle öldürürsen <b>garanti 1 Şafak Çekirdeği</b> düşer. Bu, Şafak Kılıcı ve Şafak zırh setinin anahtar malzemesidir.</p>
+    </div>
+    <div class="card">
+      <h3>Nadir balıkçılık</h3>
+      <p>Oltan yalnızca balık çekmez. Balık tutarken şansla nadir ganimetler gelir:</p>
+      <div class="kv" style="margin-top:var(--space-4)">
+        <span><img class="px" src="img/tex/amethyst_lens.png" width="18" height="18" alt="" style="vertical-align:-4px"> Ametist Mercek</span><b>%1,5</b>
+        <span><img class="px" src="img/tex/dawn_core.png" width="18" height="18" alt="" style="vertical-align:-4px"> Şafak Çekirdeği</span><b>%0,25</b>
+        <span>Açık su ganimeti</span><b>%6</b>
+      </div>
+      <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">BOSS avına çıkmak istemeyen sabırlı balıkçılar için Şafak Çekirdeği'nin alternatif yolu budur.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:var(--space-4)">
+    <h3>Alet kalitesi = daha çok beceri XP'si</h3>
+    <p style="margin-bottom:var(--space-4)">Madencilik, Kazı, Odunculuk ve Çiftçilik becerilerinde kazandığın XP, elindeki aletin malzemesine göre çarpanlanır. Netherite alet kullanan, taşa göre <b>%70 daha hızlı</b> seviye atlar.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Alet malzemesi</th><th>XP çarpanı</th><th>Not</th></tr></thead>
+        <tbody>
+          <tr><td>Elle</td><td class="num">0.85×</td><td>Aletsiz iş yarım kalır</td></tr>
+          <tr><td>Tahta</td><td class="num">0.90×</td><td>Başlangıç</td></tr>
+          <tr><td>Taş</td><td class="num">1.00×</td><td>Referans</td></tr>
+          <tr><td>Altın</td><td class="num">1.00×</td><td>Hızlı ama kırılgan</td></tr>
+          <tr><td>Demir</td><td class="num">1.15×</td><td>Dengeli tercih</td></tr>
+          <tr><td>Elmas</td><td class="num">1.40×</td><td>Uzun vadeli yatırım</td></tr>
+          <tr><td>Netherite</td><td class="num">1.70×</td><td>En yüksek kazanç</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">Çarpan yalnızca <b>kazma, balta, kürek veya çapa</b> tutarken geçerlidir; kılıçla maden kazmak XP'yi artırmaz.</p>
+  </div>
+</section>
+
+
+<!-- 13 ETKINLIK: HAFTALIK GOREVLER -->
+<section id="etkinlik">
+  <div class="sec-head">
+    <span class="sec-idx">10 / Etkinlik</span>
+    <h2>Haftalık görevler: oyna, kazan</h2>
+    <p><span class="cmd">/etkinlik</span> menüsünde 5 görev bulunur. Görevler doğrudan oyun istatistiklerine bağlıdır; tıklamak yetmez, gerçekten oynaman gerekir. Ödülü aldıktan sonra aynı görev <b>7 gün</b> sonra yeniden açılır.</p>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Görev</th><th>Hedef</th><th>Nasıl ilerler?</th><th>Ödül</th></tr></thead>
+      <tbody>
+        <tr><td>⛏ Maden Haftası</td><td><b>500 blok</b> kaz</td><td>Kazmayla kırılan her blok sayılır</td><td class="num">250 ₺</td></tr>
+        <tr><td>🏹 Av Sezonu</td><td><b>2000 hasar</b> ver</td><td>Canavarlara verdiğin toplam hasar</td><td class="num">400 ₺</td></tr>
+        <tr><td>🌾 Hasat Zamanı</td><td><b>250 eşya</b> kullan</td><td>Çapa, kova, yemek… her kullanım</td><td class="num">500 ₺</td></tr>
+        <tr><td>🛡 Zindan Yolcusu</td><td><b>1,5 km</b> yürü</td><td>Keşfet, mağaralara in, yol al</td><td class="num">750 ₺</td></tr>
+        <tr><td>💰 Usta Zanaatkâr</td><td><b>100 eşya</b> üret</td><td>Craft masasında ürettiğin her eşya</td><td class="num">1000 ₺</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:var(--space-4);color:var(--muted);font-size:14px">Beş görevin tamamı toplam <b>2900 ₺</b> eder. Her görevin altında canlı ilerleme sayacın görünür; hedef dolmadan ödül alınamaz.</p>
+</section>
+
+<!-- 14 YETENEK AGACI -->
+<section id="yetenekler">
+  <div class="sec-head">
+    <span class="sec-idx">11 / Yetenekler</span>
+    <h2>Sınıfına kalıcı yetenekler aç</h2>
+    <p><span class="cmd">/yetenek</span> menüsü, seçtiğin sınıfın pasif gücünü parayla kalıcı olarak büyütür. Her sınıfın 2 yeteneği vardır: <b>Aşama I 1000 ₺</b>, <b>Aşama II 2500 ₺</b>. Yetenekler süresizdir; yalnızca kendi sınıfının yeteneklerini açabilirsin.</p>
+  </div>
+  <div class="grid g3">
+    <div class="card">
+      <h3 style="color:var(--r-rare)">🗡 Savaşçı</h3>
+      <div class="kv" style="margin-top:var(--space-3)">
+        <span>Aşama I</span><b>Sağlam Duruş · Direnç</b>
+        <span>Aşama II</span><b>Güç Vuruşu · Güç</b>
+      </div>
+      <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">Tank gibi dur, vurduğun yerde iz bırak.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--r-uncommon)">🏹 Okçu</h3>
+      <div class="kv" style="margin-top:var(--space-3)">
+        <span>Aşama I</span><b>Hızlı Adım · Hız</b>
+        <span>Aşama II</span><b>Keskin Göz · Gece Görüşü</b>
+      </div>
+      <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">Mesafeyi koru, karanlıkta bile gör.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--r-epic)">🔮 Büyücü</h3>
+      <div class="kv" style="margin-top:var(--space-3)">
+        <span>Aşama I</span><b>Mana Akışı · Yenilenme</b>
+        <span>Aşama II</span><b>Bilgi · Acele</b>
+      </div>
+      <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">Sürekli kendini onar, her işi hızlandır.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--r-rare)">🗡 Suikastçı</h3>
+      <div class="kv" style="margin-top:var(--space-3)">
+        <span>Aşama I</span><b>Gölge Adımı · Hız II</b>
+        <span>Aşama II</span><b>Karanlık · Görünmezlik</b>
+      </div>
+      <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">Kimse seni görmeden işini bitir.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--r-uncommon)">⛏ Madenci</h3>
+      <div class="kv" style="margin-top:var(--space-3)">
+        <span>Aşama I</span><b>Derin Kazıcı · Acele II</b>
+        <span>Aşama II</span><b>Kaya Derisi · Direnç II</b>
+      </div>
+      <p style="margin-top:var(--space-3);font-size:13px;color:var(--muted)">En derin mağaralarda bile kaya gibi sağlam.</p>
+    </div>
+    <div class="card">
+      <h3>💡 Nasıl çalışır?</h3>
+      <p style="font-size:13px;color:var(--muted)">Yetenek hesabına <b>kalıcı pasif efekt</b> olarak işlenir; ölünce silinmez. Sınıfını <span class="cmd">/sinif</span> ile değiştirirsen yeni sınıfının yetenek ağacı açılır ve pasiflerin yeni sınıfa göre yenilenir.</p>
+    </div>
+  </div>
+</section>
+
 <section id="komutlar">
   <div class="sec-head">
-    <span class="sec-idx">09 / Komutlar</span>
+    <span class="sec-idx">12 / Komutlar</span>
     <h2>Bilmen gereken her komut</h2>
     <p>Sunucuya özel menüler üstte, genel survival komutları altta.</p>
   </div>
@@ -827,9 +1000,11 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
     <table>
       <thead><tr><th>Kategori</th><th>Komut</th><th>Ne yapar</th></tr></thead>
       <tbody>
-        <tr><td rowspan="3"><b>Menüler</b></td><td><span class="cmd">/sinif</span></td><td>Sınıf seçimi ve başlangıç seti</td></tr>
+        <tr><td rowspan="5"><b>Menüler</b></td><td><span class="cmd">/sinif</span></td><td>Sınıf seçimi ve başlangıç seti</td></tr>
         <tr><td><span class="cmd">/karakter</span></td><td>Karakter özeti ve sınıf yenileme</td></tr>
         <tr><td><span class="cmd">/demirci</span></td><td>Malzeme/yemek/zırh marketi ve silah yükseltme</td></tr>
+        <tr><td><span class="cmd">/etkinlik</span></td><td>Haftalık görevler (5 görev, toplam 2900 ₺)</td></tr>
+        <tr><td><span class="cmd">/yetenek</span></td><td>Sınıfına özel kalıcı pasif yetenek ağacı</td></tr>
         <tr><td rowspan="2"><b>Hesap</b></td><td><span class="cmd">/register &lt;şifre&gt; &lt;şifre&gt;</span></td><td>İlk girişte hesap kaydı</td></tr>
         <tr><td><span class="cmd">/login &lt;şifre&gt;</span></td><td>Giriş yap</td></tr>
         <tr><td rowspan="4"><b>Işınlanma</b></td><td><span class="cmd">/sethome</span> · <span class="cmd">/home</span></td><td>Ev kur ve dön (en fazla 3)</td></tr>
@@ -854,7 +1029,7 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
 <!-- 10 KURALLAR -->
 <section id="kurallar">
   <div class="sec-head">
-    <span class="sec-idx">10 / Kurallar</span>
+    <span class="sec-idx">13 / Kurallar</span>
     <h2>Sunucu kuralları</h2>
     <p>Herkesin keyfi için basit ve net. Kural ihlali uyarı, geçici yasak veya kalıcı yasakla sonuçlanır.</p>
   </div>
@@ -875,7 +1050,7 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
 <!-- 11 SSS -->
 <section id="sss">
   <div class="sec-head">
-    <span class="sec-idx">11 / SSS</span>
+    <span class="sec-idx">14 / SSS</span>
     <h2>Sık sorulan sorular</h2>
   </div>
   <div class="faq">
@@ -905,7 +1080,19 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
     </details>
     <details>
       <summary>Şafak Çekirdeği nasıl bulunur?</summary>
-      <div class="a">Seviye 20 üzeri düşmanca canavarlar %2 ihtimalle, seviye 40 üzeri %6 ihtimalle düşürür. Spawnerdan gelen moblardan düşmez. Alternatifi demircide <b>5.000 ₺</b>.</div>
+      <div class="a">Üç yol var: <b>1)</b> Seviye 25+ BOSS canavarları kendi elinle öldür, garanti düşer. <b>2)</b> Seviye 20+ canavarlar %2, seviye 40+ %6 şansla düşürür (spawner moblarından düşmez). <b>3)</b> Açık suda balık tutarken %0,25 şansla oltana takılır. Sabırsızsan demircide <b>5.000 ₺</b>.</div>
+    </details>
+    <details>
+      <summary>BOSS canavarlar nerede çıkar?</summary>
+      <div class="a">Canavar seviyesi hem mesafeyle hem derinlikle artar. BOSS (seviye 25+) için doğuş noktasından <b>2.000+ blok</b> uzaklaş ve derin mağaralara (<b>Y ≤ -50</b>) in; o bölgede seviye 45'e kadar çıkar. Yalnızca derine inmek ya da yalnızca uzaklaşmak yetmez, ikisi bir arada gerekir. BOSS'lar <b>⚔ BOSS ⚔</b> adıyla altın rengi parlar, %50 fazla canları ve %40 fazla hasarları vardır; hazırlıksız girme. Ödülü: garanti Şafak Çekirdeği.</div>
+    </details>
+    <details>
+      <summary>Haftalık görevler ne zaman sıfırlanır?</summary>
+      <div class="a"><span class="cmd">/etkinlik</span> menüsünde ödülünü aldığın görev <b>7 gün</b> sonra yeniden açılır. İlerleme oyun istatistiklerinle otomatik ölçülür (kazılan blok, verilen hasar, yürünen mesafe, kullanılan ve üretilen eşya); ayrıca bildirmen gerekmez.</div>
+    </details>
+    <details>
+      <summary>Kazandığım XP neden bazen az görünüyor?</summary>
+      <div class="a">Beceri XP'n elindeki aletin malzemesine göre çarpanlanır: tahta <b>0.90×</b>, taş <b>1.00×</b>, demir <b>1.15×</b>, elmas <b>1.40×</b>, netherite <b>1.70×</b>. Çıplak elle çalışmak ise <b>0.85×</b>. Detaylı tablo Dünya bölümünde.</div>
     </details>
     <details>
       <summary>Set bonusu neden çalışmıyor?</summary>
@@ -933,6 +1120,19 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
 </main>
 
 <footer>
+  <div class="wrap">
+    <div class="ad-box">
+      <h3>Türkçe Survival RPG deneyimi seni bekliyor</h3>
+      <p>Özel tarım sistemi, 5 sınıf, BOSS avları, haftalık görevler, yetenek ağacı ve oyuncu pazarı tek sunucuda. Crack ve premium tüm oyuncular 1.16 - 1.21.x sürümleriyle katılabilir.</p>
+      <div class="ad-chips">
+        <span class="chip">Kayıt: /register</span>
+        <span class="chip">Sınıf: /sinif</span>
+        <span class="chip">Görev: /etkinlik</span>
+        <span class="chip">Yetenek: /yetenek</span>
+      </div>
+      <button class="btn btn-primary" data-copy="91.98.80.233:25678">Sunucu IP'sini kopyala</button>
+    </div>
+  </div>
   <div class="wrap foot">
     <span>NIXAMC WIKI · 2026</span>
     <span>91.98.80.233:25678 · LEAF 1.21.11</span>
@@ -940,6 +1140,13 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
   </div>
 </footer>
 
+<aside class="sidebar" id="sidebar" aria-label="Şu an çevrimiçi oyuncular">
+  <div class="sb-title"><span class="sb-dot" id="sbDot"></span> Şu an sunucuda</div>
+  <div class="sb-count" id="sbCount">…<small> / kişi</small></div>
+  <ul class="sb-list" id="sbList"></ul>
+  <div class="sb-state" id="sbState">Bilgi alınıyor…</div>
+  <div class="sb-note">Liste yalnızca çevrimiçi oyuncuların adlarını gösterir, her 30 saniyede yenilenir.</div>
+</aside>
 <div class="toast" id="toast">IP kopyalandı</div>
 
 <script>
@@ -957,6 +1164,36 @@ footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:va
       }
     });
   });
+  // --- Canli oyuncu listesi (yalnizca isim/sayi; IP gosterilmez) ---
+  var sbApi='https://api.mcsrvstat.us/3/91.98.80.233:25678';
+  var sbCount=document.getElementById('sbCount'),sbList=document.getElementById('sbList'),
+      sbState=document.getElementById('sbState'),sbDot=document.getElementById('sbDot');
+  function sbEsc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function sbLoad(){
+    fetch(sbApi,{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      if(d&&d.online&&d.players){
+        var on=d.players.online||0,mx=d.players.max||0,ls=d.players.list||[];
+        sbDot.classList.add('on');
+        sbCount.innerHTML=on+'<small> / '+mx+' kişi</small>';
+        sbList.innerHTML=ls.slice(0,10).map(function(p){
+          var nm=sbEsc(p.name);
+          return '<li><img src="https://mc-heads.net/avatar/'+nm+'/16" width="16" height="16" alt="" loading="lazy">'+nm+'</li>';
+        }).join('');
+        if(ls.length>10)sbList.insertAdjacentHTML('beforeend','<li class="sb-more">ve '+(ls.length-10)+' kişi daha…</li>');
+        sbState.textContent=on===0?'Şu an kimse yok, ilk giren sen ol!':'Oyuncular şu an çevrimiçi.';
+      }else{
+        sbDot.classList.remove('on');
+        sbCount.innerHTML='-<small> / çevrimdışı</small>';
+        sbList.innerHTML='';
+        sbState.textContent='Sunucu şu anda kapalı veya yeniden başlatılıyor.';
+      }
+    }).catch(function(){
+      sbCount.innerHTML='?';
+      sbState.textContent='Oyuncu listesi alınamadı, birazdan yeniden denenecek.';
+    });
+  }
+  sbLoad();
+  setInterval(sbLoad,30000);
   var links=[].slice.call(document.querySelectorAll('#navLinks a'));
   var map={};links.forEach(function(a){var id=a.getAttribute('href').slice(1);map[id]=a;});
   if('IntersectionObserver' in window){
