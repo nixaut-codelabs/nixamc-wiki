@@ -1,1502 +1,976 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NixaMC Wiki — Resmi Survival RPG Sunucu Rehberi</title>
-  <meta name="description" content="NixaMC Survival RPG: Özel tarım mekanikleri, 5 sınıf sistemi, kademeli ekipmanlar, ValhallaMMO yetenek ağacı ve sunucu komutları rehberi.">
-  <style>
-    :root {
-      /* Style 6: Picker Dark / Obsidian Minimal Design Tokens */
-      --color-bg: #101013;
-      --color-surface: #16161a;
-      --color-card: #1c1c21;
-      --color-card-hover: #222228;
-      --color-subtle: #26262d;
-      --color-subtle-hover: #2f2f37;
-      --color-border: #27272e;
-      --color-border-hover: #3e3e48;
-      --color-border-strong: #525260;
-      --color-text-primary: #ededf0;
-      --color-text-secondary: #9ea0a8;
-      --color-text-tertiary: #6f717a;
-      --color-accent: #ffffff;
-      --color-accent-contrast: #0a0a0c;
-      --color-badge-bg: rgba(255, 255, 255, 0.05);
-      --color-badge-border: rgba(255, 255, 255, 0.12);
-      --color-code-bg: #131317;
-      --color-rarity-common: #a0a0a8;
-      --color-rarity-rare: #5e9eff;
-      --color-rarity-epic: #d880ff;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NixaMC Wiki · Survival RPG Rehberi</title>
+<meta name="description" content="NixaMC sunucusu için topluluk rehberi: sınıflar, farm sistemi, mutfak, ekipman ilerlemesi, zırh setleri, demirci, RPG becerileri ve komutlar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍅</text></svg>">
+<style>
+:root{
+  --bg:#101013;
+  --surface:#16161a;
+  --card:#1c1c21;
+  --card-hover:#222228;
+  --inset:#26262d;
+  --border:#27272e;
+  --border-hover:#3e3e48;
+  --border-strong:#525260;
+  --text:#ededf0;
+  --muted:#9a9aa4;
+  --faint:#6d6d76;
+  --accent:#ffffff;
+  --contrast:#0a0a0c;
+  --r-common:#c8c8d0;
+  --r-uncommon:#d4c46a;
+  --r-rare:#6ab8d4;
+  --r-epic:#b86ad4;
+  --sans:"Geist","Satoshi","Outfit","DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px;
+  --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
+  --radius:10px; --radius-sm:6px;
+  --maxw:1080px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--sans);font-size:15px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent);color:var(--contrast)}
+a{color:var(--text);text-decoration:none}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+img{display:block;max-width:100%}
+.px{image-rendering:pixelated;image-rendering:crisp-edges}
 
-      /* Spacing Scale */
-      --space-3xs: 2px;
-      --space-2xs: 4px;
-      --space-xs: 8px;
-      --space-sm: 12px;
-      --space-md: 16px;
-      --space-lg: 24px;
-      --space-xl: 32px;
-      --space-2xl: 48px;
-      --space-3xl: 64px;
-      --space-4xl: 96px;
+/* dot grid */
+.dotgrid{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;
+  background-image:radial-gradient(rgba(255,255,255,0.08) 1px,transparent 1px);
+  background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 30%,transparent 75%);
+}
 
-      /* Typography Scale */
-      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-      --font-size-2xs: 11px;
-      --font-size-xs: 12px;
-      --font-size-sm: 13px;
-      --font-size-base: 15px;
-      --font-size-md: 17px;
-      --font-size-lg: 20px;
-      --font-size-xl: 24px;
-      --font-size-2xl: 32px;
-      --font-size-3xl: 42px;
+/* nav */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(16,16,19,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-in{
+  max-width:var(--maxw);margin:0 auto;padding:0 var(--space-5);
+  display:flex;align-items:center;gap:var(--space-5);height:60px;
+}
+.brand{font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.brand b{color:var(--accent)}
+.nav-links{display:flex;gap:var(--space-1);overflow-x:auto;scrollbar-width:none;flex:1}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{
+  font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--muted);padding:6px 10px;border-radius:var(--radius-sm);white-space:nowrap;
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:var(--text);background:var(--card)}
+.nav-links a.active{color:var(--accent);background:var(--inset)}
+.nav-ip{
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:6px 12px;cursor:pointer;background:var(--surface);white-space:nowrap;
+  transition:border-color .15s,color .15s;
+}
+.nav-ip:hover{border-color:var(--border-hover);color:var(--text)}
 
-      /* Radii */
-      --radius-xs: 4px;
-      --radius-sm: 6px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --radius-xl: 16px;
-      --radius-full: 9999px;
+/* layout */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--space-5)}
+section{padding:var(--space-8) 0 var(--space-6)}
+section+section{border-top:1px solid var(--border)}
+.sec-head{margin-bottom:var(--space-6)}
+.sec-idx{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase;display:block;margin-bottom:var(--space-2)}
+.sec-head h2{font-size:clamp(22px,3.4vw,30px);font-weight:650;letter-spacing:-.015em;margin-bottom:var(--space-2)}
+.sec-head p{color:var(--muted);max-width:640px}
 
-      /* Transitions */
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --transition-fast: 140ms var(--ease-out);
-      --transition-normal: 240ms var(--ease-out);
-    }
+/* hero */
+.hero{padding:var(--space-9) 0 var(--space-8);text-align:left}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--border);border-radius:999px;padding:6px 14px;margin-bottom:var(--space-5);
+  background:var(--surface);
+}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:#7ec97e;box-shadow:0 0 8px rgba(126,201,126,.6)}
+.hero h1{font-size:clamp(34px,6vw,56px);font-weight:700;letter-spacing:-.03em;line-height:1.08;margin-bottom:var(--space-4)}
+.hero h1 span{color:var(--muted);font-weight:400}
+.hero p{color:var(--muted);max-width:560px;margin-bottom:var(--space-6);font-size:16px}
+.hero-row{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center;margin-bottom:var(--space-6)}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:13px;letter-spacing:.02em;
+  padding:12px 20px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid transparent;
+  transition:background .15s,border-color .15s,color .15s;
+}
+.btn-primary{background:var(--accent);color:var(--contrast);font-weight:600}
+.btn-primary:hover{background:#e0e0e5}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--border-hover)}
+.ip-chip{font-family:var(--mono);font-size:14px;letter-spacing:.02em}
+.chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.chip{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);background:var(--surface);border:1px solid var(--border);
+  border-radius:999px;padding:5px 12px;
+}
+.hero-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+}
+.hero-cell{background:var(--surface);padding:var(--space-4) var(--space-4)}
+.hero-cell .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.hero-cell .v{font-family:var(--mono);font-size:15px;color:var(--text)}
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* generic cards */
+.grid{display:grid;gap:var(--space-4)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-5);transition:border-color .15s,background .15s;
+}
+.card:hover{border-color:var(--border-hover);background:var(--card-hover)}
+.card h3{font-size:16px;font-weight:600;letter-spacing:-.01em;margin-bottom:var(--space-2)}
+.card p{color:var(--muted);font-size:14px}
+.card ul{list-style:none;margin-top:var(--space-3)}
+.card ul li{
+  color:var(--muted);font-size:13.5px;padding:3px 0 3px 18px;position:relative;
+}
+.card ul li::before{content:"·";position:absolute;left:4px;color:var(--border-strong);font-weight:700}
+.mono{font-family:var(--mono)}
+.cmd{
+  font-family:var(--mono);font-size:12.5px;color:var(--text);
+  background:var(--contrast);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:2px 8px;white-space:nowrap;
+}
+.note{
+  background:var(--surface);border:1px solid var(--border);border-left:2px solid var(--accent);
+  border-radius:var(--radius-sm);padding:var(--space-4) var(--space-5);
+  color:var(--muted);font-size:14px;margin-top:var(--space-5);
+}
+.note b{color:var(--text)}
 
-    html {
-      scroll-behavior: smooth;
-      background-color: var(--color-bg);
-      color: var(--color-text-primary);
-      font-family: var(--font-sans);
-      font-size: 15px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+/* steps */
+.steps{counter-reset:st;display:grid;gap:var(--space-3)}
+.step{
+  counter-increment:st;display:flex;gap:var(--space-4);align-items:flex-start;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-4) var(--space-5);transition:border-color .15s;
+}
+.step:hover{border-color:var(--border-hover)}
+.step::before{
+  content:counter(st,decimal-leading-zero);
+  font-family:var(--mono);font-size:12px;color:var(--faint);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--surface);padding:6px 8px;flex-shrink:0;
+}
+.step h3{font-size:15px;font-weight:600;margin-bottom:2px}
+.step p{color:var(--muted);font-size:13.5px}
 
-    body {
-      min-height: 100vh;
-      background-color: var(--color-bg);
-      color: var(--color-text-primary);
-      position: relative;
-      overflow-x: hidden;
-    }
+/* class cards */
+.class-card{display:flex;flex-direction:column;gap:var(--space-3)}
+.class-top{display:flex;align-items:center;gap:var(--space-3)}
+.class-ico{
+  width:48px;height:48px;background:var(--contrast);border:1px solid var(--border);
+  border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.class-ico img{width:32px;height:32px}
+.class-top h3{margin-bottom:0}
+.class-role{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;font-size:13px;margin-top:var(--space-2)}
+.kv dt{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);padding-top:2px;white-space:nowrap}
+.kv dd{color:var(--muted)}
 
-    /* Subtle dot grid atmosphere mask */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.35;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-      background-size: 24px 24px;
-      mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 25%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 25%, transparent 80%);
-    }
+/* item grids */
+.item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--space-3)}
+.item{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2);
+  transition:border-color .15s,background .15s;
+}
+.item:hover{border-color:var(--border-hover);background:var(--card-hover)}
+.item-ico{
+  width:44px;height:44px;background:var(--contrast);border:1px solid var(--border);
+  border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;
+}
+.item-ico img{width:32px;height:32px}
+.item-name{font-size:13.5px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.item-sub{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.03em}
+.rtag{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:3px;padding:1px 6px;display:inline-block;opacity:.85;
+}
+.r-common{color:var(--r-common)}
+.r-uncommon{color:var(--r-uncommon)}
+.r-rare{color:var(--r-rare)}
+.r-epic{color:var(--r-epic)}
 
-    /* Top utility bar */
-    .utility-bar {
-      position: relative;
-      z-index: 30;
-      background: var(--color-surface);
-      border-bottom: 1px solid var(--color-border);
-      font-size: var(--font-size-xs);
-      color: var(--color-text-secondary);
-      padding: 6px var(--space-lg);
-    }
-    .utility-inner {
-      max-width: 1080px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-md);
-      flex-wrap: wrap;
-    }
-    .utility-badges {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      flex-wrap: wrap;
-    }
-    .status-dot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      border-radius: var(--radius-full);
-      background-color: #38c172;
-      box-shadow: 0 0 6px rgba(56, 193, 114, 0.5);
-      margin-right: 6px;
-    }
+/* tables */
+.table-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-top:var(--space-4)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px}
+th{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);text-align:left;padding:var(--space-3) var(--space-4);
+  border-bottom:1px solid var(--border);background:var(--surface);white-space:nowrap;
+}
+td{padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--border);color:var(--muted);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.015)}
+td b,td strong{color:var(--text);font-weight:600}
+td .cmd{font-size:12px}
+.t-ico{width:24px;height:24px;display:inline-block;vertical-align:middle;margin-right:10px;background:var(--contrast);border-radius:4px}
+.num{font-family:var(--mono);color:var(--text);white-space:nowrap}
 
-    /* Sticky Header & Nav */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 25;
-      background: rgba(16, 16, 19, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--color-border);
-    }
-    .nav-container {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 0 var(--space-lg);
-      height: 58px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-md);
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      text-decoration: none;
-      color: var(--color-text-primary);
-    }
-    .brand-title {
-      font-weight: 700;
-      font-size: var(--font-size-md);
-      letter-spacing: -0.02em;
-    }
-    .brand-tag {
-      font-family: var(--font-mono);
-      font-size: var(--font-size-2xs);
-      padding: 2px 7px;
-      background: var(--color-subtle);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-xs);
-      color: var(--color-text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      overflow-x: auto;
-      white-space: nowrap;
-      scrollbar-width: none;
-    }
-    .nav-links::-webkit-scrollbar {
-      display: none;
-    }
-    .nav-links a {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
-      text-decoration: none;
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
-      transition: color var(--transition-fast), background var(--transition-fast);
-    }
-    .nav-links a:hover {
-      color: var(--color-text-primary);
-      background: var(--color-card);
-    }
+/* recipes */
+.recipe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:var(--space-3);margin-top:var(--space-4)}
+.recipe{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-4);transition:border-color .15s;
+}
+.recipe:hover{border-color:var(--border-hover)}
+.recipe-out{display:flex;align-items:center;gap:10px;margin-bottom:var(--space-3)}
+.recipe-out img{width:28px;height:28px}
+.recipe-out span{font-size:14px;font-weight:600}
+.recipe-ings{display:flex;flex-wrap:wrap;gap:6px}
+.ing{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+  background:var(--contrast);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px 8px;
+}
+.ing img{width:16px;height:16px}
 
-    /* Main Container */
-    main {
-      position: relative;
-      z-index: 10;
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: var(--space-2xl) var(--space-lg) var(--space-4xl);
-    }
+/* armor sets */
+.set-card{display:flex;flex-direction:column;gap:var(--space-4)}
+.set-pieces{display:flex;gap:var(--space-2)}
+.set-pieces .item-ico{width:44px;height:44px}
+.bonus{display:grid;gap:6px;margin-top:var(--space-2)}
+.bonus div{
+  display:flex;justify-content:space-between;gap:var(--space-3);
+  font-size:13px;color:var(--muted);border-bottom:1px dashed var(--border);padding-bottom:5px;
+}
+.bonus div:last-child{border-bottom:none}
+.bonus .val{font-family:var(--mono);color:var(--text);white-space:nowrap}
 
-    /* Hero Section */
-    .hero {
-      padding: var(--space-xl) 0 var(--space-3xl);
-      border-bottom: 1px solid var(--color-border);
-    }
-    .hero-meta {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-      font-family: var(--font-mono);
-      font-size: var(--font-size-xs);
-      color: var(--color-text-tertiary);
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .hero h1 {
-      font-size: clamp(28px, 4.5vw, 42px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: var(--space-md);
-      color: var(--color-text-primary);
-      max-width: 22ch;
-    }
-    .hero-lead {
-      color: var(--color-text-secondary);
-      font-size: var(--font-size-md);
-      line-height: 1.6;
-      max-width: 62ch;
-      margin-bottom: var(--space-xl);
-    }
+/* chain */
+.chain{display:flex;align-items:stretch;gap:var(--space-3);flex-wrap:wrap;margin-top:var(--space-4)}
+.chain-node{
+  flex:1;min-width:180px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-4);display:flex;gap:var(--space-3);align-items:center;transition:border-color .15s;
+}
+.chain-node:hover{border-color:var(--border-hover)}
+.chain-arrow{align-self:center;font-family:var(--mono);color:var(--faint);font-size:18px}
+.chain-node .item-ico{width:40px;height:40px}
+.chain-node .item-ico img{width:28px;height:28px}
 
-    /* Server Connect Card */
-    .connect-box {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: var(--space-md);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-    }
-    .connect-info {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2xs);
-    }
-    .connect-label {
-      font-size: var(--font-size-xs);
-      color: var(--color-text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-family: var(--font-mono);
-    }
-    .connect-address {
-      font-family: var(--font-mono);
-      font-size: clamp(16px, 2.5vw, 21px);
-      font-weight: 600;
-      color: var(--color-text-primary);
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-    .connect-actions {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-    }
+/* faq */
+.faq{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card);margin-top:var(--space-4)}
+.faq details{border-bottom:1px solid var(--border)}
+.faq details:last-child{border-bottom:none}
+.faq summary{
+  padding:var(--space-4) var(--space-5);cursor:pointer;font-size:14.5px;font-weight:600;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:var(--space-4);
+  transition:background .15s;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{background:var(--card-hover)}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--faint);font-size:18px;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 var(--space-5) var(--space-4);color:var(--muted);font-size:14px}
+.faq .a code{font-family:var(--mono);font-size:12.5px;background:var(--contrast);border:1px solid var(--border);border-radius:4px;padding:1px 6px}
 
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-xs);
-      font-family: var(--font-sans);
-      font-size: var(--font-size-sm);
-      font-weight: 500;
-      border-radius: var(--radius-md);
-      padding: 9px 16px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
-      user-select: none;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: var(--color-accent);
-      color: var(--color-accent-contrast);
-      border: 1px solid var(--color-accent);
-    }
-    .btn-primary:hover {
-      background: #e4e4e9;
-      border-color: #e4e4e9;
-    }
-    .btn-secondary {
-      background: var(--color-card);
-      color: var(--color-text-primary);
-      border: 1px solid var(--color-border);
-    }
-    .btn-secondary:hover {
-      background: var(--color-card-hover);
-      border-color: var(--color-border-hover);
-    }
+/* rules */
+.rules{counter-reset:r;list-style:none;margin-top:var(--space-4);display:grid;gap:var(--space-2)}
+.rules li{
+  counter-increment:r;display:flex;gap:var(--space-4);
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:var(--space-3) var(--space-5);font-size:14px;color:var(--muted);
+}
+.rules li::before{content:counter(r,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--faint);padding-top:3px}
+.rules li b{color:var(--text)}
 
-    /* Section Styling */
-    section {
-      padding: var(--space-3xl) 0 0;
-      scroll-margin-top: 70px;
-    }
-    .section-header {
-      margin-bottom: var(--space-xl);
-    }
-    .section-tag {
-      font-family: var(--font-mono);
-      font-size: var(--font-size-xs);
-      color: var(--color-text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: var(--space-2xs);
-      display: block;
-    }
-    .section-title {
-      font-size: var(--font-size-2xl);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--color-text-primary);
-      margin-bottom: var(--space-xs);
-    }
-    .section-desc {
-      color: var(--color-text-secondary);
-      font-size: var(--font-size-base);
-      max-width: 68ch;
-      line-height: 1.6;
-    }
+/* skill grid */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:var(--space-2);margin-top:var(--space-4)}
+.skill{
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:10px 14px;transition:border-color .15s,color .15s;
+}
+.skill:hover{border-color:var(--border-hover);color:var(--text)}
+.skill small{display:block;color:var(--faint);font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
 
-    /* Cards & Grids */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-md);
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-md);
-    }
-    .grid-5 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: var(--space-md);
-    }
+/* footer */
+footer{border-top:1px solid var(--border);padding:var(--space-7) 0;margin-top:var(--space-7)}
+.foot{display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;color:var(--faint);font-family:var(--mono);font-size:11.5px;letter-spacing:.04em}
 
-    .card {
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      transition: background var(--transition-fast), border-color var(--transition-fast);
-      position: relative;
-    }
-    .card:hover {
-      background: var(--color-card-hover);
-      border-color: var(--color-border-hover);
-    }
-    .card-title {
-      font-size: var(--font-size-md);
-      font-weight: 600;
-      color: var(--color-text-primary);
-      margin-bottom: var(--space-xs);
-      letter-spacing: -0.01em;
-    }
-    .card-text {
-      color: var(--color-text-secondary);
-      font-size: var(--font-size-sm);
-      line-height: 1.6;
-    }
-    .card-meta {
-      margin-top: var(--space-md);
-      padding-top: var(--space-sm);
-      border-top: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: var(--font-size-xs);
-      color: var(--color-text-tertiary);
-      font-family: var(--font-mono);
-    }
+/* toast */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--accent);color:var(--contrast);font-family:var(--mono);font-size:12.5px;font-weight:600;
+  padding:10px 20px;border-radius:var(--radius-sm);opacity:0;transition:transform .25s,opacity .25s;z-index:99;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-    /* Tables */
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      margin-top: var(--space-md);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: var(--font-size-sm);
-    }
-    thead {
-      background: var(--color-surface);
-      border-bottom: 1px solid var(--color-border);
-    }
-    th {
-      padding: var(--space-sm) var(--space-md);
-      font-size: var(--font-size-xs);
-      font-weight: 600;
-      color: var(--color-text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-    td {
-      padding: var(--space-sm) var(--space-md);
-      border-bottom: 1px solid var(--color-border);
-      color: var(--color-text-secondary);
-      vertical-align: middle;
-    }
-    tr:last-child td {
-      border-bottom: none;
-    }
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.015);
-      color: var(--color-text-primary);
-    }
-
-    /* Badges & Tags */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-family: var(--font-mono);
-      font-size: var(--font-size-xs);
-      padding: 2px 8px;
-      border-radius: var(--radius-xs);
-      background: var(--color-subtle);
-      border: 1px solid var(--color-border);
-      color: var(--color-text-secondary);
-      white-space: nowrap;
-    }
-    .badge-common {
-      color: var(--color-rarity-common);
-      border-color: rgba(160, 160, 168, 0.3);
-    }
-    .badge-rare {
-      color: var(--color-rarity-rare);
-      border-color: rgba(94, 158, 255, 0.3);
-    }
-    .badge-epic {
-      color: var(--color-rarity-epic);
-      border-color: rgba(216, 128, 255, 0.3);
-    }
-
-    /* Code styling */
-    code {
-      font-family: var(--font-mono);
-      font-size: 0.9em;
-      padding: 2px 6px;
-      background: var(--color-code-bg);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-xs);
-      color: var(--color-text-primary);
-    }
-
-    /* Class Cards */
-    .class-card {
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-    .class-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: var(--space-xs);
-      border-bottom: 1px solid var(--color-border);
-    }
-    .class-name {
-      font-size: var(--font-size-md);
-      font-weight: 700;
-      color: var(--color-text-primary);
-    }
-    .class-perks {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin: var(--space-xs) 0;
-    }
-    .class-perks li {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      line-height: 1.5;
-    }
-    .class-perks li::before {
-      content: "•";
-      color: var(--color-text-tertiary);
-      font-weight: bold;
-    }
-    .class-items {
-      margin-top: auto;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      padding: var(--space-xs) var(--space-sm);
-      font-size: var(--font-size-xs);
-    }
-    .class-items-title {
-      font-size: var(--font-size-2xs);
-      text-transform: uppercase;
-      font-family: var(--font-mono);
-      color: var(--color-text-tertiary);
-      margin-bottom: 3px;
-    }
-
-    /* Item and Crop Previews */
-    .thumb-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: var(--space-md);
-    }
-    .thumb-card {
-      background: var(--color-card);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-md);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: var(--space-xs);
-    }
-    .thumb-img {
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      image-rendering: pixelated;
-      margin-bottom: 4px;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
-    }
-    .thumb-title {
-      font-weight: 600;
-      font-size: var(--font-size-sm);
-      color: var(--color-text-primary);
-    }
-    .thumb-caption {
-      font-size: var(--font-size-xs);
-      color: var(--color-text-secondary);
-      line-height: 1.4;
-    }
-
-    /* Callout Note */
-    .callout {
-      background: var(--color-surface);
-      border-left: 3px solid var(--color-accent);
-      border-top: 1px solid var(--color-border);
-      border-right: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      padding: var(--space-md) var(--space-lg);
-      margin: var(--space-md) 0;
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-    }
-    .callout strong {
-      color: var(--color-text-primary);
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--color-border);
-      background: var(--color-surface);
-      padding: var(--space-2xl) var(--space-lg);
-      margin-top: var(--space-4xl);
-      font-size: var(--font-size-xs);
-      color: var(--color-text-tertiary);
-    }
-    .footer-inner {
-      max-width: 1080px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: var(--space-md);
-    }
-    .footer-links {
-      display: flex;
-      gap: var(--space-md);
-    }
-    .footer-links a {
-      color: var(--color-text-secondary);
-      text-decoration: none;
-    }
-    .footer-links a:hover {
-      color: var(--color-text-primary);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 820px) {
-      .grid-2, .grid-3 {
-        grid-template-columns: 1fr;
-      }
-      .connect-box {
-        grid-template-columns: 1fr;
-      }
-      .connect-actions {
-        width: 100%;
-      }
-      .connect-actions .btn {
-        flex: 1;
-      }
-      .hero h1 {
-        max-width: 100%;
-      }
-    }
-  </style>
+@media (max-width:900px){
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .hero-strip{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:768px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .nav-links{display:none}
+  section{padding:var(--space-7) 0 var(--space-5)}
+  .hero{padding:var(--space-7) 0 var(--space-6)}
+}
+@media (max-width:480px){
+  .hero-strip{grid-template-columns:1fr}
+  .chain-arrow{transform:rotate(90deg);align-self:center}
+  .item-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
 </head>
 <body>
+<div class="dotgrid" aria-hidden="true"></div>
 
-  <!-- Top System Bar -->
-  <aside class="utility-bar" aria-label="Sistem Bilgilendirmesi">
-    <div class="utility-inner">
-      <div class="utility-badges">
-        <span><span class="status-dot"></span>Sunucu Aktif</span>
-        <span>•</span>
-        <span>Protokol: Java Edition 1.16 – 1.21.x</span>
-        <span>•</span>
-        <span>Mod: Survival RPG</span>
-      </div>
-      <div class="utility-badges">
-        <span>Bölge Kilidi: TR + AZ</span>
-        <span>•</span>
-        <span>Hile Koruması: GrimAC</span>
-      </div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#hero">NIXA<b>MC</b></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#baslangic">Başlangıç</a>
+      <a href="#siniflar">Sınıflar</a>
+      <a href="#farm">Farm</a>
+      <a href="#mutfak">Mutfak</a>
+      <a href="#ekipman">Ekipman</a>
+      <a href="#zirh">Zırh</a>
+      <a href="#demirci">Demirci</a>
+      <a href="#rpg">RPG</a>
+      <a href="#komutlar">Komutlar</a>
+      <a href="#kurallar">Kurallar</a>
+      <a href="#sss">SSS</a>
     </div>
-  </aside>
+    <button class="nav-ip" data-copy="91.98.80.233:25678" title="IP adresini kopyala">91.98.80.233:25678</button>
+  </div>
+</nav>
 
-  <!-- Sticky Global Navigation -->
-  <header>
-    <div class="nav-container">
-      <a href="#hero" class="brand" aria-label="NixaMC Ana Sayfa">
-        <span class="brand-title">NixaMC</span>
-        <span class="brand-tag">Wiki v2</span>
-      </a>
-      <nav class="nav-links" aria-label="Ana Dizin">
-        <a href="#baslangic">Başlangıç</a>
-        <a href="#siniflar">Sınıflar</a>
-        <a href="#farm">Farm</a>
-        <a href="#yemekler">Yemekler</a>
-        <a href="#ekipman">Ekipman</a>
-        <a href="#demirci">Demirci</a>
-        <a href="#rpg">Valhalla RPG</a>
-        <a href="#komutlar">Komutlar</a>
-        <a href="#kurallar">Kurallar</a>
-        <a href="#sss">SSS</a>
-      </nav>
-    </div>
-  </header>
+<header class="hero wrap" id="hero">
+  <span class="hero-tag"><span class="hero-dot"></span> Sunucu yayında · Leaf 1.21.11</span>
+  <h1>NixaMC Rehberi<br><span>Survival RPG · Tarım · Sınıflar</span></h1>
+  <p>Özel ekinler, efektli yemekler, ilerlemeli silah zinciri, zırh setleri ve 13 beceri dalı. Bu rehber sunucudaki her sistemin nasıl çalıştığını tek tek anlatır.</p>
+  <div class="hero-row">
+    <button class="btn btn-primary" data-copy="91.98.80.233:25678">
+      <span class="ip-chip" id="ipText">91.98.80.233:25678</span> · Kopyala
+    </button>
+    <a class="btn btn-ghost" href="#baslangic">Hızlı başlangıç</a>
+  </div>
+  <div class="chips" style="margin-bottom:var(--space-6)">
+    <span class="chip">Java 1.16 → 1.21.x</span>
+    <span class="chip">Crack + Premium</span>
+    <span class="chip">Türkçe</span>
+    <span class="chip">Kayıt: /register</span>
+  </div>
+  <div class="hero-strip">
+    <div class="hero-cell"><div class="k">Sınıf</div><div class="v">5</div></div>
+    <div class="hero-cell"><div class="k">Özel eşya</div><div class="v">39</div></div>
+    <div class="hero-cell"><div class="k">Tarif</div><div class="v">33</div></div>
+    <div class="hero-cell"><div class="k">Beceri</div><div class="v">13</div></div>
+  </div>
+</header>
 
-  <main id="hero">
+<main class="wrap">
 
-    <!-- Hero Introduction -->
-    <div class="hero">
-      <div class="hero-meta">NixaMC Survival RPG Dokümantasyonu</div>
-      <h1>Gerçekçi Tarım, Sınıflar ve RPG Deneyimi</h1>
-      <p class="hero-lead">
-        NixaMC, özel fizik tabanlı ekin mekanikleri, 5 derin uzmanlık sınıfı, kademeli ekipman yükseltmeleri ve ValhallaMMO yetenek sistemiyle harmanlanmış adil bir Türkçe Minecraft topluluğudur.
-      </p>
-
-      <!-- Server Connect Bar -->
-      <div class="connect-box">
-        <div class="connect-info">
-          <span class="connect-label">Doğrudan Sunucu Bağlantı Adresi</span>
-          <div class="connect-address">
-            <span id="ipText">91.98.80.233:25678</span>
-          </div>
-        </div>
-        <div class="connect-actions">
-          <button type="button" class="btn btn-primary" id="copyIpBtn" onclick="copyServerIp()">IP Adresini Kopyala</button>
-          <a href="#baslangic" class="btn btn-secondary">Nasıl Katılırım?</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- 1. Başlangıç Rehberi -->
-    <section id="baslangic">
-      <div class="section-header">
-        <span class="section-tag">01 / Giriş &amp; Yapılandırma</span>
-        <h2 class="section-title">Başlangıç Rehberi</h2>
-        <p class="section-desc">Sunucuya katılmak için gereken istemci ayarları, kimlik doğrulama adımları ve teknik detaylar.</p>
-      </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3 class="card-title">Bağlantı ve Sürüm Desteği</h3>
-          <p class="card-text">
-            Sunucumuz Java Edition <strong>1.16 ile 1.21.x</strong> arasındaki tüm istemci sürümleriyle tam uyumludur (ViaVersion / ViaBackwards köprüsü aktiftir).
-          </p>
-          <div class="card-meta">
-            <span>Port: 25678</span>
-            <span>Önerilen: 1.20.4+</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Hesap Güvenliği (AuthMe)</h3>
-          <p class="card-text">
-            Sunucumuz hem orijinal (Premium) hem de crack istemcileri destekler (<code>online-mode=false</code>). Sunucuya girdiğinizde şifrenizi belirleyin:
-          </p>
-          <div style="margin-top: 8px;">
-            <code>/register &lt;şifre&gt; &lt;şifre&gt;</code><br>
-            <code>/login &lt;şifre&gt;</code>
-          </div>
-          <div class="card-meta">
-            <span>Başlangıç Parası</span>
-            <span>100₺ Bakiye</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Zorunlu Kaynak Paketi</h3>
-          <p class="card-text">
-            Özel ekinler, RPG silahları ve arayüz dokuları için sunucu kaynak paketi zorunludur. Sunucuya giriş yaparken çıkan istemi <strong>"Evet / Kabul Et"</strong> olarak onaylayın.
-          </p>
-          <div class="card-meta">
-            <span>Prompt: Zorunlu</span>
-            <span>Hata: Paketi Aç</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="callout">
-        <strong>Önemli Platform Durumu:</strong> Bedrock Edition crossplay desteği ve sunucu içi yakınlık bazlı sesli sohbet (Voice Chat) şu anda kapalıdır; bu özellikler yakında aktif edilecektir.
-      </div>
-    </section>
-
-    <!-- 2. Sınıflar -->
-    <section id="siniflar">
-      <div class="section-header">
-        <span class="section-tag">02 / Karakter Rolleri</span>
-        <h2 class="section-title">Sınıflar ve Karakter Uzmanlıkları</h2>
-        <p class="section-desc">
-          Oyun tarzınıza göre seçebileceğiniz 5 farklı uzmanlık sınıfı. Sınıfınızı <code>/sinif</code> komutu ile seçebilir, mevcut profilinize ve kalıcı bonuslarınıza <code>/karakter</code> menüsünden bakabilirsiniz.
-        </p>
-      </div>
-
-      <div class="callout">
-        <strong>24 Saat Kuralı (Dupe Gate):</strong> Eşya ve kit suiistimallerini engellemek için sınıf seçimi yapıldıktan sonra sınıf değiştirme hakkı <strong>24 saatlik bekleme süresine</strong> girer. Seçiminizi dikkatli yapın.
-      </div>
-
-      <div class="grid-2">
-        <!-- Savaşçı -->
-        <div class="class-card">
-          <div class="class-header">
-            <h3 class="class-name">Savaşçı</h3>
-            <span class="badge">Ön Cephe</span>
-          </div>
-          <p class="card-text">Yüksek yakın dövüş savunması, kalkan bloklama direnci ve cephe savaşlarında üstün hayatta kalma kabiliyeti.</p>
-          <ul class="class-perks">
-            <li>Kalıcı yakın dövüş fiziksel hasar direnci (+%10).</li>
-            <li>Kılıç savurma menzilinde ve kalkan dayanıklılığında artış.</li>
-            <li>Zorlu çatışmalarda sersemletme direnci.</li>
-          </ul>
-          <div class="class-items">
-            <div class="class-items-title">İmza Eşyaları</div>
-            <strong>Gezgin Kılıcı</strong> (RARE, +2 Hasar) ve <strong>Kaşif Göğüslüğü</strong>
-          </div>
-        </div>
-
-        <!-- Okçu -->
-        <div class="class-card">
-          <div class="class-header">
-            <h3 class="class-name">Okçu</h3>
-            <span class="badge">Uzak Menzil</span>
-          </div>
-          <p class="card-text">Uzaktan yüksek kritik hasar, hızlı yay germe temposu ve çatışma alanından çevikçe sıyrılma yeteneği.</p>
-          <ul class="class-perks">
-            <li>Yay germe hızında belirgin artış ve ok sapma oranında düşüş.</li>
-            <li>Menzilli vuruşlarda kritik hasar çarpanı (+%15).</li>
-            <li>Düşme hasarı indirimi ve hafif adımlar.</li>
-          </ul>
-          <div class="class-items">
-            <div class="class-items-title">İmza Eşyaları</div>
-            <strong>Özel Avcı Yayı</strong> ve <strong>Kaşif Botları</strong>
-          </div>
-        </div>
-
-        <!-- Büyücü -->
-        <div class="class-card">
-          <div class="class-header">
-            <h3 class="class-name">Büyücü</h3>
-            <span class="badge">Büyü &amp; Destek</span>
-          </div>
-          <p class="card-text">Elementel güçler, iksir güçlendirmeleri ve alan etkili büyülerle savaşın seyrini değiştiren uzmanlık.</p>
-          <ul class="class-perks">
-            <li>Tüketilen iksir ve yemeklerin etki sürelerinde %25 uzama.</li>
-            <li>Negatif durum etkilerine (zehir, zayıflık) karşı doğal bağışıklık direnci.</li>
-            <li>Büyüsel saldırı ve savunma sinerjisi.</li>
-          </ul>
-          <div class="class-items">
-            <div class="class-items-title">İmza Eşyaları</div>
-            <strong>Şafak Miğferi</strong> (Büyüsel zırh parçası)
-          </div>
-        </div>
-
-        <!-- Suikastçı -->
-        <div class="class-card">
-          <div class="class-header">
-            <h3 class="class-name">Suikastçı</h3>
-            <span class="badge">Gölge &amp; Çeviklik</span>
-          </div>
-          <p class="card-text">Yüksek hız, seri vuruş kombinasyonları ve arkadan yapılan ani saldırılarda yıkıcı hasar potansiyeli.</p>
-          <ul class="class-perks">
-            <li>Kalıcı hareket hızı artışı (+%12).</li>
-            <li>Arkadan vuruşlarda ilave kritik darbe çarpanı.</li>
-            <li>Saldırı savuşturma ve atılma kabiliyeti.</li>
-          </ul>
-          <div class="class-items">
-            <div class="class-items-title">İmza Eşyaları</div>
-            <strong>Kaşif Bıçağı</strong> (COMMON, seri vuruş) ve <strong>Kaşif Tozlukları</strong>
-          </div>
-        </div>
-      </div>
-
-      <!-- Madenci (Full Width Card) -->
-      <div class="class-card" style="margin-top: var(--space-md);">
-        <div class="class-header">
-          <h3 class="class-name">Madenci</h3>
-          <span class="badge">Keşif &amp; Sanayi</span>
-        </div>
-        <p class="card-text">Derin maden keşifleri, hızlı cevher toplama, yeraltı dayanıklılığı ve alan kazı kabiliyeti ile sunucu ekonomisinin bel kemiği.</p>
-        <ul class="class-perks">
-          <li>Doğal Acele (Haste) etkisi ve taş blokları kırarken ekstra dayanıklılık.</li>
-          <li>Cevher kazarken nadir maden bulma şansında artış.</li>
-          <li>Karanlık madenlerde daha net görüş ve patlama direnci.</li>
-        </ul>
-        <div class="class-items">
-          <div class="class-items-title">İmza Eşyaları</div>
-          <strong>Madenci Çekici</strong> (3x3 Alan Kazı Kabiliyeti) + <strong>Çiftçi Miğferi &amp; Botları</strong>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. Farm Sistemi -->
-    <section id="farm">
-      <div class="section-header">
-        <span class="section-tag">03 / Tarım Mekanikleri</span>
-        <h2 class="section-title">Farm Sistemi ve Ekin Mekaniği</h2>
-        <p class="section-desc">
-          NixaMC'de tarım yalnızca sağ tıklamaktan ibaret değildir; gerçekçi fizik kuralları, ışık ihtiyacı ve zanaat araçlarıyla derin bir ziraat ekonomisi sunar.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3 class="card-title">Gerçek Ekin Fiziği</h3>
-          <p class="card-text">
-            Tohumlar çapalanmış nemli toprağa ekilir. Ekinin altındaki blok kırılırsa ekin bağı koparak düşer. Olgunlaşmadan kırılan ekinlerden ürün çıkmaz, yalnızca <strong>1 adet tohum</strong> iade edilir.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Hasat ve Verim Döngüsü</h3>
-          <p class="card-text">
-            Tam olgunlaşmış bir ekin kırıldığında veya tırpanla hasat edildiğinde <strong>1 ila 3 ürün</strong> ve tarlayı yeniden ekmeniz için <strong>1 ila 2 tohum</strong> elde edilir.
-          </p>
-        </div>
-
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
-            <h3 class="card-title">Çiftçi Tırpanı &amp; Işık</h3>
-            <img src="img/ek_tirpan.png" alt="Çiftçi Tırpanı" style="width: 38px; height: 38px; object-fit: contain; image-rendering: pixelated;">
-          </div>
-          <p class="card-text">
-            <strong>Çiftçi Tırpanı</strong> ile yapılan hasatlar hem daha hızlıdır hem de ek ekin düşme ihtimali sağlar. Ekinlerin büyümesi için en az 9 seviyesinde ışık ve nem gereklidir; kemik tozu tamamen çalışır.
-          </p>
-        </div>
-      </div>
-
-      <h3 style="margin: var(--space-xl) 0 var(--space-sm); font-size: var(--font-size-lg);">Özel Ekin Türleri</h3>
-      <div class="thumb-grid">
-        <div class="thumb-card">
-          <img src="img/tohum_domates.png" alt="Domates Tohumu" class="thumb-img">
-          <div class="thumb-title">Domates</div>
-          <div class="thumb-caption">Çorba ve pizzaların ana malzemesi. Hızlı büyüme evresi.</div>
-        </div>
-
-        <div class="thumb-card">
-          <img src="img/tohum_misir.png" alt="Mısır Tohumu" class="thumb-img">
-          <div class="thumb-title">Mısır</div>
-          <div class="thumb-caption">Madencilerin favorisi olan ızgara mısırın ham maddesi.</div>
-        </div>
-
-        <div class="thumb-card">
-          <img src="img/tohum_cilek.png" alt="Çilek Tohumu" class="thumb-img">
-          <div class="thumb-title">Çilek</div>
-          <div class="thumb-caption">Taze meyve salataları ve tatlılar için temel meyve.</div>
-        </div>
-
-        <div class="thumb-card">
-          <img src="img/tohum_uzum.png" alt="Üzüm Tohumu" class="thumb-img">
-          <div class="thumb-title">Üzüm</div>
-          <div class="thumb-caption">Yüksek doygunluklu gurme tarifler ve salatalar için.</div>
-        </div>
-
-        <div class="thumb-card">
-          <img src="img/tohum_biber.png" alt="Biber Tohumu" class="thumb-img">
-          <div class="thumb-title">Biber</div>
-          <div class="thumb-caption">Ateş direnci ve güç veren yahni tariflerinin özü.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. Yemekler ve Efektler -->
-    <section id="yemekler">
-      <div class="section-header">
-        <span class="section-tag">04 / Gurme Mutfak</span>
-        <h2 class="section-title">Yemekler ve Efektler</h2>
-        <p class="section-desc">
-          Hasat edilen ürünleri pişirerek hazırlayabileceğiniz özel yemekler ve karakterinize sağladıkları güçlü geçici etkiler.
-        </p>
-      </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Yemek</th>
-              <th>Besin Değeri</th>
-              <th>Sağlanan Etkiler</th>
-              <th>Süre &amp; Kademe</th>
-              <th>Kullanım Amacı</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Domates Çorbası</strong></td>
-              <td><span class="badge">6 Doygunluk</span></td>
-              <td>Rejenerasyon (Yenilenme) + Doygunluk</td>
-              <td>10 Saniye (Kademe I)</td>
-              <td>Savaş sonrası hızlı can toparlama</td>
-            </tr>
-            <tr>
-              <td><strong>Pizza</strong></td>
-              <td><span class="badge">8 Doygunluk</span></td>
-              <td>Doygunluk + Acele / Kazı Hızı (Haste)</td>
-              <td>30 Saniye (Kademe I)</td>
-              <td>Maden kazıları ve inşaat temposu</td>
-            </tr>
-            <tr>
-              <td><strong>Elmalı Turta</strong></td>
-              <td><span class="badge">7 Doygunluk</span></td>
-              <td>Güçlü Rejenerasyon (Yenilenme II)</td>
-              <td>15 Saniye (Kademe II)</td>
-              <td>Kritik boss ve zindan dövüşleri</td>
-            </tr>
-            <tr>
-              <td><strong>Meyve Salatası</strong></td>
-              <td><span class="badge">5 Doygunluk</span></td>
-              <td>Hız (Speed) + Zıplama Artışı (Jump Boost)</td>
-              <td>30 Saniye (Kademe I)</td>
-              <td>Arazi keşfi ve engebeli dağ tırmanışları</td>
-            </tr>
-            <tr>
-              <td><strong>Izgara Mısır</strong></td>
-              <td><span class="badge">7 Doygunluk</span></td>
-              <td>Kazı Hızı II (Haste II) + Hız</td>
-              <td>45 Saniye (Kademe II) / 20sn</td>
-              <td>Hızlı damar ve alan madenciliği</td>
-            </tr>
-            <tr>
-              <td><strong>Biber Yahnisi</strong></td>
-              <td><span class="badge">7 Doygunluk</span></td>
-              <td>Ateş Direnci + Güç (Strength)</td>
-              <td>60 Saniye (Ateş) / 20sn (Güç)</td>
-              <td>Nether keşifleri ve elit canavar baskınları</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="thumb-grid" style="margin-top: var(--space-md);">
-        <div class="thumb-card">
-          <img src="img/yemek_corb.png" alt="Domates Çorbası" class="thumb-img">
-          <div class="thumb-title">Domates Çorbası</div>
-          <div class="thumb-caption">Sıcak ve besleyici çorba.</div>
-        </div>
-        <div class="thumb-card">
-          <img src="img/yemek_pizza.png" alt="Pizza" class="thumb-img">
-          <div class="thumb-title">Pizza</div>
-          <div class="thumb-caption">Yüksek doygunluk ve acele.</div>
-        </div>
-        <div class="thumb-card">
-          <img src="img/yemek_turta.png" alt="Elmalı Turta" class="thumb-img">
-          <div class="thumb-title">Elmalı Turta</div>
-          <div class="thumb-caption">Yoğun rejenerasyon kaynağı.</div>
-        </div>
-        <div class="thumb-card">
-          <img src="img/yemek_salata.png" alt="Meyve Salatası" class="thumb-img">
-          <div class="thumb-title">Meyve Salatası</div>
-          <div class="thumb-caption">Hafif ve çevik adımlar.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. Ekipman ve İlerleme -->
-    <section id="ekipman">
-      <div class="section-header">
-        <span class="section-tag">05 / Donanım &amp; Silahlar</span>
-        <h2 class="section-title">Ekipman ve İlerleme</h2>
-        <p class="section-desc">
-          Başlangıç bıçağından efsanevi Şafak Kılıcı'na uzanan silah yükseltme zinciri ve ValhallaMMO 4 parça tam set bonusları.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <div class="class-header">
-            <h3 class="card-title">Kaşif Bıçağı</h3>
-            <span class="badge badge-common">COMMON</span>
-          </div>
-          <div style="text-align: center; margin: 8px 0;">
-            <img src="img/ek_kasif.png" alt="Kaşif Bıçağı" style="max-height: 80px; object-fit: contain; image-rendering: pixelated; border-radius: var(--radius-sm);">
-          </div>
-          <p class="card-text">
-            Hafif alaşımdan üretilmiş, seri saldırılara olanak sağlayan temel keşif silahı.
-          </p>
-          <div class="card-meta">
-            <span>+1 Temel Hasar</span>
-            <span>Hızlı Saldırı</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="class-header">
-            <h3 class="card-title">Gezgin Kılıcı</h3>
-            <span class="badge badge-rare">RARE</span>
-          </div>
-          <div style="height: 80px; display: flex; align-items: center; justify-content: center; margin: 8px 0; background: var(--color-surface); border-radius: var(--radius-sm); border: 1px dashed var(--color-border); font-family: var(--font-mono); font-size: var(--font-size-xs); color: var(--color-text-tertiary);">
-            Gezgin Kılıcı (RARE)
-          </div>
-          <p class="card-text">
-            Dengeli ağırlık ve keskinlik sunan, uzun keşif rotaları için tasarlanmış sağlam kılıç.
-          </p>
-          <div class="card-meta">
-            <span>+2 Temel Hasar</span>
-            <span>Dengeli Savunma</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="class-header">
-            <h3 class="card-title">Şafak Kılıcı</h3>
-            <span class="badge badge-epic">EPIC</span>
-          </div>
-          <div style="text-align: center; margin: 8px 0;">
-            <img src="img/ek_safak.png" alt="Şafak Kılıcı" style="max-height: 80px; object-fit: contain; image-rendering: pixelated; border-radius: var(--radius-sm);">
-          </div>
-          <p class="card-text">
-            Şafak Çekirdeği ile güçlendirilmiş, düşmanları alevler içinde bırakan parlak efsanevi kılıç.
-          </p>
-          <div class="card-meta">
-            <span>+3 Temel Hasar</span>
-            <span>Ateş Vuruşu I</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Şafak Çekirdeği Kartı -->
-      <div class="callout" style="margin-top: var(--space-md);">
-        <strong>Şafak Çekirdeği (EPIC):</strong> Seviye 20 ve üzeri elit canavarlardan nadir olarak düşer. Alternatif olarak Demirci'den 5.000₺ karşılığında satın alınabilir. Gezgin Kılıcı'nı Şafak Kılıcı'na yükseltmek için zorunludur.
-      </div>
-
-      <h3 style="margin: var(--space-xl) 0 var(--space-sm); font-size: var(--font-size-lg);">ValhallaMMO Zırh Setleri &amp; 4 Parça Bonusları</h3>
-      <div class="grid-3">
-        <div class="card">
-          <h3 class="card-title">Çiftçi Seti</h3>
-          <p class="card-text">
-            Miğfer, Göğüslük, Tozluk ve Bot kombinasyonu. Tarım ve toplayıcılık yapanlar için üretilmiştir.
-          </p>
-          <div class="card-meta">
-            <span>4 Parça Bonusu</span>
-            <span>+Şans &amp; +Farm XP</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Kaşif Seti</h3>
-          <p class="card-text">
-            Hafif zincir zırh halkaları. Uzun mesafe koşan ve çevik savaşan maceraperestler içindir.
-          </p>
-          <div class="card-meta">
-            <span>4 Parça Bonusu</span>
-            <span>Kalıcı Hız Bonusu</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Şafak Seti</h3>
-          <p class="card-text">
-            Ağır ve büyülü elmas alaşım. Ön cephe savaşçıları ve zindan fatihleri için üst düzey koruma.
-          </p>
-          <div class="card-meta">
-            <span>4 Parça Bonusu</span>
-            <span>+Güç &amp; Ateş Direnci</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Demirci -->
-    <section id="demirci">
-      <div class="section-header">
-        <span class="section-tag">06 / Ticaret &amp; Dökümhane</span>
-        <h2 class="section-title">Demirci ve Yükseltme Fiyatları</h2>
-        <p class="section-desc">
-          <code>/demirci</code> komutunu kullanarak erişebileceğiniz atölyede silahlarınızı geliştirebilir, nadir set zırhlarını ve hazır yemekleri temin edebilirsiniz.
-        </p>
-      </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>İşlem / Eşya</th>
-              <th>Gerekli Materyaller</th>
-              <th>Hizmet Bedeli</th>
-              <th>Açıklama</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Şafak Kılıcı Yükseltmesi</strong></td>
-              <td>Gezgin Kılıcı + 1x Şafak Çekirdeği</td>
-              <td><span class="badge">2.500₺</span></td>
-              <td>Gezgin Kılıcını EPIC Şafak Kılıcı'na dönüştürür.</td>
-            </tr>
-            <tr>
-              <td><strong>Şafak Çekirdeği</strong></td>
-              <td>Doğrudan Satın Alım</td>
-              <td><span class="badge">5.000₺</span></td>
-              <td>Seviye 20+ canavar avlamadan çekirdeğe erişim sağlar.</td>
-            </tr>
-            <tr>
-              <td><strong>Çiftçi Zırhı Parçası</strong></td>
-              <td>Parça Başına (Miğfer / Göğüslük / Tozluk / Bot)</td>
-              <td><span class="badge">500₺</span></td>
-              <td>Şans ve Farm XP artıran zırh parçası.</td>
-            </tr>
-            <tr>
-              <td><strong>Kaşif Zırhı Parçası</strong></td>
-              <td>Parça Başına (Miğfer / Göğüslük / Tozluk / Bot)</td>
-              <td><span class="badge">800₺</span></td>
-              <td>Hareket hızı ve çeviklik sağlayan keşif zırhı parçası.</td>
-            </tr>
-            <tr>
-              <td><strong>Şafak Zırhı Parçası</strong></td>
-              <td>Parça Başına (Miğfer / Göğüslük / Tozluk / Bot)</td>
-              <td><span class="badge">1.500₺</span></td>
-              <td>Fiziksel güç ve ateş direnci sunan elit zırh parçası.</td>
-            </tr>
-            <tr>
-              <td><strong>Hazır Pişmiş Yemekler</strong></td>
-              <td>Porsiyon Başına (Çorba, Pizza, Salata, Mısır)</td>
-              <td><span class="badge">100₺ – 150₺</span></td>
-              <td>Tarlayla uğraşmak istemeyenler için hızlı iksir etkili gıdalar.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- 7. RPG Sistemi -->
-    <section id="rpg">
-      <div class="section-header">
-        <span class="section-tag">07 / Valhalla Yetenek Ağacı</span>
-        <h2 class="section-title">ValhallaMMO RPG Sistemi</h2>
-        <p class="section-desc">
-          Yaptığınız her zanaat, madencilik eylemi ve savaş hareketi ValhallaMMO altyapısıyla karakterinize deneyim puanı kazandırır.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3 class="card-title">Alet Kademesi Deneyim Çarpanı</h3>
-          <p class="card-text">
-            Kullandığınız aletin kalitesi, kırdığınız bloklardan ve kestiğiniz odunlardan kazanacağınız ValhallaMMO XP miktarını doğrudan belirler:
-          </p>
-          <div style="margin-top: 12px; font-family: var(--font-mono); font-size: var(--font-size-xs); background: var(--color-surface); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
-            Netherite &gt; Diamond &gt; Iron &gt; Stone &gt; Wood &gt; Çıplak El
-          </div>
-          <p class="card-text" style="margin-top: 10px;">
-            Netherite aletlerle çalışmak, temel taş aletlere kıyasla yeteneklerinizi kat kat daha süratli geliştirir.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Canlı Skor ve TAB Göstergesi</h3>
-          <p class="card-text">
-            Kazanılan yetenek puanları (Skill Points) ve uzmanlık seviyeniz sürekli olarak sunucu <strong>TAB oyuncu listesinin alt kısmında (footer)</strong> güncel olarak gösterilir.
-          </p>
-          <div class="card-meta">
-            <span>Ağaçlar: Maden, Çiftlik, Odun</span>
-            <span>TAB: Canlı Puan</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8. Komutlar -->
-    <section id="komutlar">
-      <div class="section-header">
-        <span class="section-tag">08 / Sunucu Kontrolleri</span>
-        <h2 class="section-title">Komutlar ve Kullanım Rehberi</h2>
-        <p class="section-desc">
-          Oyuncuların günlük oynanışta ihtiyaç duyacağı tüm temel komutlar ve kısayollar.
-        </p>
-      </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Komut</th>
-              <th>Kullanım Amacı</th>
-              <th>Kategori</th>
-              <th>Açıklama / Sınır</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>/sinif</code></td>
-              <td>Sınıf Seçim Menüsü</td>
-              <td>Karakter</td>
-              <td>5 uzmanlık sınıfından birini seçer (24 saatte bir).</td>
-            </tr>
-            <tr>
-              <td><code>/karakter</code></td>
-              <td>Karakter ve İstatistik Paneli</td>
-              <td>Karakter</td>
-              <td>Aktif pasifleri, statları ve sınıf ayrıntılarını açar.</td>
-            </tr>
-            <tr>
-              <td><code>/tpa &lt;oyuncu&gt;</code></td>
-              <td>Işınlanma İsteği</td>
-              <td>Sosyal</td>
-              <td>Belirtilen oyuncunun yanına ışınlanma talebi yollar.</td>
-            </tr>
-            <tr>
-              <td><code>/tpaccept</code></td>
-              <td>Işınlanmayı Onayla</td>
-              <td>Sosyal</td>
-              <td>Gelen son ışınlanma talebini kabul eder.</td>
-            </tr>
-            <tr>
-              <td><code>/home [isim]</code></td>
-              <td>Eve Işınlanma</td>
-              <td>Seyahat</td>
-              <td>Kayıtlı ev noktasına döner (Maksimum 3 ev hakkı).</td>
-            </tr>
-            <tr>
-              <td><code>/sethome [isim]</code></td>
-              <td>Ev Noktası Kaydet</td>
-              <td>Seyahat</td>
-              <td>Bulunulan konumu ev olarak belirler (Maksimum 3 ev).</td>
-            </tr>
-            <tr>
-              <td><code>/spawn</code></td>
-              <td>Başlangıç Merkezine Dönüş</td>
-              <td>Seyahat</td>
-              <td>Sunucu spawn ve ana pazar alanına ışınlar.</td>
-            </tr>
-            <tr>
-              <td><code>/skin &lt;isim&gt;</code></td>
-              <td>Karakter Görünümü Değiştir</td>
-              <td>Kozmetik</td>
-              <td>Karakter görünümünüzü istenen kostüme uyarlar.</td>
-            </tr>
-            <tr>
-              <td><code>/sit</code></td>
-              <td>Oturma Pozisyonu</td>
-              <td>Animasyon</td>
-              <td>Herhangi bir blok, basamak veya sandalyeye oturur.</td>
-            </tr>
-            <tr>
-              <td><code>/lay</code></td>
-              <td>Uzanma Pozisyonu</td>
-              <td>Animasyon</td>
-              <td>Yere uzanma animasyonu başlatır.</td>
-            </tr>
-            <tr>
-              <td><code>/crawl</code></td>
-              <td>Sürünme Modu</td>
-              <td>Hareket</td>
-              <td>1 blokluk dar tünellerde sürünerek geçmenizi sağlar.</td>
-            </tr>
-            <tr>
-              <td><code>/vein</code></td>
-              <td>Damar Madenciliği Modu</td>
-              <td>Maden</td>
-              <td>Eğilerek (sneak-break) aynı türdeki cevher damarlarını tekte kırar.</td>
-            </tr>
-            <tr>
-              <td><code>/demirci</code></td>
-              <td>Demirci Dükkanı Menüsü</td>
-              <td>Ekonomi</td>
-              <td>Silah yükseltme ve zırh satın alım arayüzünü açar.</td>
-            </tr>
-            <tr>
-              <td><code>/shop</code></td>
-              <td>Oyuncu Pazarı (QuickShop)</td>
-              <td>Ekonomi</td>
-              <td>Sandık dükkanları kurma ve pazar alanı arayüzü.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- 9. Kurallar -->
-    <section id="kurallar">
-      <div class="section-header">
-        <span class="section-tag">09 / Güvenlik &amp; Topluluk</span>
-        <h2 class="section-title">Kurallar ve Koruma Sistemleri</h2>
-        <p class="section-desc">
-          NixaMC sunucusunda adil rekabet, dostane ortam ve kesintisiz güvenlik için uygulanan değişmez kurallar.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3 class="card-title">Arazi Güvenliği (GriefPrevention)</h3>
-          <p class="card-text">
-            Grief, izinsiz yapı tahribatı ve hırsızlık kesinlikle yasaktır. <strong>Altın Kürek</strong> kullanarak arazinizi claimleyebilir; sandıklarınızı, hayvanlarınızı ve ekinlerinizi tamamen koruma altına alabilirsiniz.
-          </p>
-          <div class="card-meta">
-            <span>Alet: Altın Kürek</span>
-            <span>Kural: 0 Tolerans</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Hile ve Küfür Koruması (GrimAC)</h3>
-          <p class="card-text">
-            X-Ray, Fly, KillAura, Baritone veya haksız avantaj sağlayan istemciler anında tespit edilir. Sunucumuz paket tabanlı <strong>GrimAC</strong> motoru ile korunmaktadır. Sohbet alanında küfür ve hakaret yasaktır.
-          </p>
-          <div class="card-meta">
-            <span>Motor: GrimAC</span>
-            <span>Denetim: 7/24 Aktif</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Bölge Kısıtlaması (GeoRestrict)</h3>
-          <p class="card-text">
-            Yurt dışı kaynaklı bot saldırılarını ve VPN suistimallerini engellemek için sunucuya yalnızca <strong>Türkiye (TR)</strong> ve <strong>Azerbaycan (AZ)</strong> IP adreslerinden bağlantı kabul edilmektedir.
-          </p>
-          <div class="card-meta">
-            <span>Allowlist: TR + AZ</span>
-            <span>Proxy/VPN: Engelli</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Mezar Taşı Sistemi (AxGraves)</h3>
-          <p class="card-text">
-            Öldüğünüzde eşyalarınız yere saçılıp kaybolmaz. Ölüm noktanızda kilitli bir mezar taşı oluşur. Eşyalarınız <strong>5 dakika boyunca</strong> mezarda korunur; mezara sağ tıklayarak tüm envanterinizi geri alabilirsiniz.
-          </p>
-          <div class="card-meta">
-            <span>Süre: 5 Dakika</span>
-            <span>Kilit: Kişiye Özel</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 10. SSS -->
-    <section id="sss">
-      <div class="section-header">
-        <span class="section-tag">10 / Sorun Giderme</span>
-        <h2 class="section-title">Sıkça Sorulan Sorular</h2>
-        <p class="section-desc">Yeni başlayan oyuncuların en çok karşılaştığı durumlar ve pratik çözümler.</p>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3 class="card-title">Dokular mor-siyah görünüyor, ne yapmalıyım?</h3>
-          <p class="card-text">
-            Kaynak paketini indirirken bağlantı kopmuş olabilir. Çok oyunculu sunucu listenizde NixaMC'yi seçin, "Düzenle" butonuna basın ve "Sunucu Kaynak Paketleri: Açık (Enabled)" seçeneğini işaretleyip tekrar bağlanın.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Sınıfımı ne zaman değiştirebilirim?</h3>
-          <p class="card-text">
-            Sınıf seçtikten sonra suistimalleri önlemek için 24 saatlik bekleme süresi devreye girer. Süre dolduktan sonra <code>/sinif</code> yazarak istediğiniz başka bir uzmanlığa geçiş yapabilirsiniz.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Sunucuda para nasıl kazanılır?</h3>
-          <p class="card-text">
-            Hasat ettiğiniz domates, mısır, biber ve meyveleri işleyip yemek yaparak oyunculara satabilir (<code>/shop</code>) veya madencilikten çıkardığınız değerli cevherleri pazarda değerlendirebilirsiniz.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Mezarımı bulamazsam eşyalarım kaybolur mu?</h3>
-          <p class="card-text">
-            Öldüğünüzde sohbette ölüm koordinatlarınız belirir. 5 dakika içinde mezarınıza ulaşıp sağ tıkladığınızda tüm eşyalarınızı eksiksiz geri alırsınız. 5 dakika aşılırsa mezar açılarak eşyalar serbest kalır.
-          </p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Clean Obsidian Footer -->
-  <footer>
-    <div class="footer-inner">
+<!-- 01 BAŞLANGIÇ -->
+<section id="baslangic">
+  <div class="sec-head">
+    <span class="sec-idx">01 / Başlangıç</span>
+    <h2>Üç adımda oyuna gir</h2>
+    <p>Sunucu offline moddadır: hem premium hem crack hesaplar girebilir. Kaynak paketi sunucu otomatik indirir, ekstra kurulum gerekmez.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
       <div>
-        <strong>NixaMC Survival RPG</strong> — Resmi Bilgi Bankası ve Oyuncu Kılavuzu.
-      </div>
-      <div class="footer-links">
-        <a href="#hero">Yukarı Çık</a>
-        <a href="#komutlar">Komutlar</a>
-        <a href="#kurallar">Kurallar</a>
+        <h3>Sunucuya bağlan</h3>
+        <p>Çok oyunculu menüsünden <span class="cmd">91.98.80.233:25678</span> adresiyle gir. 1.16 ile 1.21.x arası her sürüm desteklenir.</p>
       </div>
     </div>
-  </footer>
+    <div class="step">
+      <div>
+        <h3>Hesabını kaydet</h3>
+        <p>İlk girişte <span class="cmd">/register sifre sifre</span> yaz. Sonraki girişlerde <span class="cmd">/login sifre</span>. Şifreni kimseyle paylaşma.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h3>Sınıfını seç</h3>
+        <p><span class="cmd">/sinif</span> menüsünden sınıfını seç ve başlangıç setini al. Seçim 24 saatte bir yenilenir, eşyaların silinmez.</p>
+      </div>
+    </div>
+  </div>
+  <div class="grid g4" style="margin-top:var(--space-5)">
+    <div class="card"><h3 class="mono" style="font-size:13px">💰 100 ₺ başlangıç</h3><p>Ekonomiye hazır başla, oyuncu marketlerinde harca.</p></div>
+    <div class="card"><h3 class="mono" style="font-size:13px">🏠 3 ev hakkı</h3><p><span class="cmd">/sethome</span> ile işaretle, <span class="cmd">/home</span> ile dön.</p></div>
+    <div class="card"><h3 class="mono" style="font-size:13px">⚰️ Ölüm koruması</h3><p>Ölünce eşyaların mezarda bekler, kimse çalamaz.</p></div>
+    <div class="card"><h3 class="mono" style="font-size:13px">🛡️ Arazi koruması</h3><p>Altın kürekle alan claimle, <span class="cmd">/trust</span> ile arkadaş ekle.</p></div>
+  </div>
+</section>
 
-  <script>
-    function copyServerIp() {
-      var ipText = document.getElementById('ipText').innerText.trim();
-      var btn = document.getElementById('copyIpBtn');
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(ipText).then(function() {
-          btn.innerText = 'Kopyalandı!';
-          setTimeout(function() { btn.innerText = 'IP Adresini Kopyala'; }, 1800);
-        }).catch(function() {
-          fallbackCopy(ipText, btn);
-        });
-      } else {
-        fallbackCopy(ipText, btn);
-      }
-    }
+<!-- 02 SINIFLAR -->
+<section id="siniflar">
+  <div class="sec-head">
+    <span class="sec-idx">02 / Sınıflar</span>
+    <h2>Beş sınıf, beş oyun tarzı</h2>
+    <p><span class="cmd">/sinif</span> menüsünden seç. Her sınıf kalıcı bir pasif efekt ve temalı bir başlangıç seti verir. <span class="cmd">/karakter</span> menüsünden bilgilerini görebilirsin.</p>
+  </div>
+  <div class="grid g2">
+    <div class="card class-card">
+      <div class="class-top">
+        <div class="class-ico"><img class="px" src="img/tex/whetstone.png" alt="Savaşçı simgesi" loading="lazy"></div>
+        <div><h3>Savaşçı</h3><span class="class-role">Yakın dövüş · Tank</span></div>
+      </div>
+      <p>Demir zırh ve kalkanla cephenin ortasına dalır.</p>
+      <dl class="kv">
+        <dt>Set</dt><dd>Demir zırh (full), kalkan, "Savaşçının Kılıcı" (Keskinlik II), 16 biftek</dd>
+        <dt>Malzeme</dt><dd>Bileme Taşı + Sağlam İp (Gezgin Kılıcı'nı kendin döv)</dd>
+        <dt>Pasif</dt><dd>Direnç I (kalıcı, %20 daha az hasar)</dd>
+      </dl>
+    </div>
+    <div class="card class-card">
+      <div class="class-top">
+        <div class="class-ico"><img class="px" src="img/tex/scout_boots.png" alt="Okçu simgesi" loading="lazy"></div>
+        <div><h3>Okçu</h3><span class="class-role">Menzil · Hareketlilik</span></div>
+      </div>
+      <p>Mesafeden vurur, zincir zırhla hafif kalır.</p>
+      <dl class="kv">
+        <dt>Set</dt><dd>Zincir zırh (full), "Avcı Yayı", 64 ok, 16 biftek, Kaşif Botları</dd>
+        <dt>Pasif</dt><dd>Hız I (kalıcı)</dd>
+      </dl>
+    </div>
+    <div class="card class-card">
+      <div class="class-top">
+        <div class="class-ico"><img class="px" src="img/tex/amethyst_lens.png" alt="Büyücü simgesi" loading="lazy"></div>
+        <div><h3>Büyücü</h3><span class="class-role">Ateş · Gece görüşü</span></div>
+      </div>
+      <p>Alev asası ve kadim alevle karanlıkta yanmadan dolaşır.</p>
+      <dl class="kv">
+        <dt>Set</dt><dd>Deri zırh (full), "Kadim Alev" (blaze rod), "Alev Asa" (Alevden Çehre I), 16 altın havuç</dd>
+        <dt>Malzeme</dt><dd>Ametist Mercek (Şafak setinin anahtarı)</dd>
+        <dt>Pasif</dt><dd>Ateş Direnci + Gece Görüşü (kalıcı)</dd>
+      </dl>
+    </div>
+    <div class="card class-card">
+      <div class="class-top">
+        <div class="class-ico"><img class="px" src="img/tex/scout_blade.png" alt="Suikastçı simgesi" loading="lazy"></div>
+        <div><h3>Suikastçı</h3><span class="class-role">Çevik · Baskın</span></div>
+      </div>
+      <p>Gölgenin dişi ve Kaşif Bıçağı ile gece avlanır.</p>
+      <dl class="kv">
+        <dt>Set</dt><dd>Deri zırh (full), "Gölge Hançeri" (demir kılıç), Kaşif Bıçağı, Kaşif Tozlukları, 16 biftek</dd>
+        <dt>Pasif</dt><dd>Gece Görüşü + Yüksek Sıçrama (kalıcı)</dd>
+      </dl>
+    </div>
+    <div class="card class-card" style="grid-column:1/-1">
+      <div class="class-top">
+        <div class="class-ico"><img class="px" src="img/tex/miner_hammer.png" alt="Madenci simgesi" loading="lazy"></div>
+        <div><h3>Madenci</h3><span class="class-role">Kaynak · 3x3 kazı</span></div>
+      </div>
+      <p>Madenci Çekici ile tek vuruşta 3x3 blok kırar, fırınıyla yerinde eritir.</p>
+      <dl class="kv">
+        <dt>Set</dt><dd>Demir zırh (full), "Usta Kazması", Madenci Çekici, fırın, 32 meşale, 16 kömür, 16 biftek</dd>
+        <dt>Malzeme</dt><dd>Bileme Taşı</dd>
+        <dt>Pasif</dt><dd>Acele + Gece Görüşü (kalıcı)</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="note"><b>24 saat kuralı:</b> Sınıf setini bir kez aldın mı 24 saat boyunca yeni set verilmez (eşya kopyalamayı önler). Menüdeki iksir butonları pasif efektlerini bedavaya tazeler.</div>
+</section>
 
-    function fallbackCopy(text, btn) {
-      var input = document.createElement('input');
-      input.value = text;
-      document.body.appendChild(input);
-      input.select();
-      try {
-        document.execCommand('copy');
-        btn.innerText = 'Kopyalandı!';
-      } catch (e) {
-        btn.innerText = 'Kopyalanamadı';
+<!-- 03 FARM -->
+<section id="farm">
+  <div class="sec-head">
+    <span class="sec-idx">03 / Farm Sistemi</span>
+    <h2>Beş özel ekin</h2>
+    <p>Çapalanmış toprağa ekilir, 4 aşamada büyür. Olgun ekini kırınca 1-3 ürün ve 1-2 tohum düşer; olgunlaşmadan kırarsan yalnızca tohumunu geri alırsın. Büyümek için ışık seviyesi 9 ister, kemik tozu çalışır.</p>
+  </div>
+  <div class="item-grid">
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/tomato_stage3.png" alt="Domates ekini" loading="lazy"></div>
+      <span class="item-name">Domates</span>
+      <span class="item-sub">🍖 4 doygunluk · çorba ve pizza temeli</span>
+    </div>
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/corn_stage3.png" alt="Mısır ekini" loading="lazy"></div>
+      <span class="item-name">Mısır</span>
+      <span class="item-sub">🍖 5 doygunluk · közlenince Acele II</span>
+    </div>
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/strawberry_stage3.png" alt="Çilek ekini" loading="lazy"></div>
+      <span class="item-name">Çilek</span>
+      <span class="item-sub">🍖 3 doygunluk · turta ve salata</span>
+    </div>
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/grape_stage3.png" alt="Üzüm ekini" loading="lazy"></div>
+      <span class="item-name">Üzüm</span>
+      <span class="item-sub">🍖 3 doygunluk · üzüm suyu</span>
+    </div>
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/pepper_stage3.png" alt="Biber ekini" loading="lazy"></div>
+      <span class="item-name">Acı Biber</span>
+      <span class="item-sub">🍖 3 doygunluk · yahni ile Ateş Direnci</span>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:var(--space-5)">
+    <div class="card">
+      <h3>Tohum nereden bulunur</h3>
+      <ul>
+        <li>Çim kırdığında rastgele düşer</li>
+        <li>Ürünü craft masasına koy: 2 tohum</li>
+        <li>Balık tutarken ve zindan sandıklarında</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Çiftçi Tırpanı</h3>
+      <ul>
+        <li>Demir çapa + Sağlam İp ile dönüştürülür</li>
+        <li>Ekin hasadında ana alet</li>
+        <li>+5 saldırı hasarı bonusu</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Yaşam kalitesi</h3>
+      <ul>
+        <li>Eğilerek kaz: tüm damarı tek seferde (VeinMiner)</li>
+        <li>Ağacı alt bloktan kes: tamamı düşer, fidan otomatik ekilir</li>
+        <li>Madenci Çekici: 3x3 alan kazısı</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 MUTFAK -->
+<section id="mutfak">
+  <div class="sec-head">
+    <span class="sec-idx">04 / Mutfak</span>
+    <h2>Yemekler sadece doyurmaz</h2>
+    <p>Her pişmiş yemek geçici efektler verir: madene inmeden Acele, savaştan önce Güç, uzun yolda Hız. Doğru yemek doğru işin yarısıdır.</p>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Yemek</th><th>Doygunluk</th><th>Nadirlik</th><th>Efektler</th></tr></thead>
+      <tbody>
+        <tr><td><img class="px t-ico" src="img/tex/tomato_soup.png" alt="" loading="lazy"><b>Domates Çorbası</b></td><td class="num">6</td><td><span class="rtag r-common">common</span></td><td>Rejenerasyon I (10sn) + Doygunluk II</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/pizza.png" alt="" loading="lazy"><b>Pizza Dilimi</b></td><td class="num">8</td><td><span class="rtag r-uncommon">uncommon</span></td><td>Doygunluk III + Acele I (30sn)</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/apple_pie.png" alt="" loading="lazy"><b>Elmalı Turta</b></td><td class="num">8</td><td><span class="rtag r-uncommon">uncommon</span></td><td>Rejenerasyon II (15sn)</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/fruit_salad.png" alt="" loading="lazy"><b>Meyve Salatası</b></td><td class="num">7</td><td><span class="rtag r-common">common</span></td><td>Hız I + Yüksek Sıçrama I (30sn)</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/grilled_corn.png" alt="" loading="lazy"><b>Közlenmiş Mısır</b></td><td class="num">7</td><td><span class="rtag r-uncommon">uncommon</span></td><td>Acele II (45sn) + Hız I (20sn)</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/pepper_stew.png" alt="" loading="lazy"><b>Biber Yahnisi</b></td><td class="num">7</td><td><span class="rtag r-uncommon">uncommon</span></td><td>Ateş Direnci I (60sn) + Güç I (20sn)</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/grape_juice.png" alt="" loading="lazy"><b>Üzüm Suyu</b></td><td class="num">5</td><td><span class="rtag r-uncommon">uncommon</span></td><td>Hız I (30sn) + Rejenerasyon II (5sn) + Doygunluk</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/strawberry_tart.png" alt="" loading="lazy"><b>Çilekli Turta</b></td><td class="num">7</td><td><span class="rtag r-uncommon">uncommon</span></td><td>Ekstra Can II (60sn) + Rejenerasyon I (5sn) + Doygunluk</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="recipe-grid">
+    <div class="recipe">
+      <div class="recipe-out"><img class="px" src="img/tex/tomato_soup.png" alt="" loading="lazy"><span>Domates Çorbası</span></div>
+      <div class="recipe-ings">
+        <span class="ing">Kase</span><span class="ing">Domates ×2</span>
+      </div>
+    </div>
+    <div class="recipe">
+      <div class="recipe-out"><img class="px" src="img/tex/grilled_corn.png" alt="" loading="lazy"><span>Közlenmiş Mısır</span></div>
+      <div class="recipe-ings">
+        <span class="ing">Mısır</span><span class="ing">Kamp Ateşi (üstte)</span>
+      </div>
+    </div>
+    <div class="recipe">
+      <div class="recipe-out"><img class="px" src="img/tex/pepper_stew.png" alt="" loading="lazy"><span>Biber Yahnisi</span></div>
+      <div class="recipe-ings">
+        <span class="ing">Kase</span><span class="ing">Acı Biber ×2</span><span class="ing">Kahverengi Mantar</span>
+      </div>
+    </div>
+    <div class="recipe">
+      <div class="recipe-out"><img class="px" src="img/tex/grape_juice.png" alt="" loading="lazy"><span>Üzüm Suyu</span></div>
+      <div class="recipe-ings">
+        <span class="ing">Cam Şişe</span><span class="ing">Üzüm ×3</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 EKİPMAN -->
+<section id="ekipman">
+  <div class="sec-head">
+    <span class="sec-idx">05 / Ekipman ve İlerleme</span>
+    <h2>Malzemeden efsaneye</h2>
+    <p>Üç ara malzeme tüm ilerlemeyi birbirine bağlar: Bileme Taşı, Sağlam İp ve Ametist Mercek. Şafak Çekirdeği ise yalnızca güçlü canavarlardan düşer.</p>
+  </div>
+  <div class="item-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/whetstone.png" alt="" loading="lazy"></div>
+      <span class="item-name">Bileme Taşı</span>
+      <span class="rtag r-common">common</span>
+      <span class="item-sub">Çakmak Taşı ×2 + Taş ×2</span>
+    </div>
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/tough_cord.png" alt="" loading="lazy"></div>
+      <span class="item-name">Sağlam İp</span>
+      <span class="rtag r-common">common</span>
+      <span class="item-sub">İp ×3 + Buğday → 2 adet</span>
+    </div>
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/amethyst_lens.png" alt="" loading="lazy"></div>
+      <span class="item-name">Ametist Mercek</span>
+      <span class="rtag r-uncommon">uncommon</span>
+      <span class="item-sub">Ametist + Cam (çapraz)</span>
+    </div>
+    <div class="item">
+      <div class="item-ico"><img class="px" src="img/tex/dawn_core.png" alt="" loading="lazy"></div>
+      <span class="item-name">Şafak Çekirdeği</span>
+      <span class="rtag r-epic">epic</span>
+      <span class="item-sub">Seviye 20+ canavarlardan %2-6</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top:var(--space-6);font-size:17px">Silah zinciri</h3>
+  <p style="color:var(--muted);font-size:14px;margin-top:var(--space-1)">Her silah bir öncekinden dönüştürülür. Zinciri atlamanın yolu yok: çekirdek, mercek ve bileme hep aynı kapıdan geçer.</p>
+  <div class="chain">
+    <div class="chain-node">
+      <div class="item-ico"><img class="px" src="img/tex/scout_blade.png" alt="" loading="lazy"></div>
+      <div><div class="item-name">Kaşif Bıçağı</div><span class="rtag r-common">common</span><div class="item-sub">Çakmak + Çubuk + Sağlam İp</div></div>
+    </div>
+    <span class="chain-arrow">→</span>
+    <div class="chain-node">
+      <div class="item-ico"><img class="px" src="img/tex/traveler_sword.png" alt="" loading="lazy"></div>
+      <div><div class="item-name">Gezgin Kılıcı</div><span class="rtag r-rare">rare</span><div class="item-sub">Demir Kılıç + Bileme Taşı + Sağlam İp</div></div>
+    </div>
+    <span class="chain-arrow">→</span>
+    <div class="chain-node">
+      <div class="item-ico"><img class="px" src="img/tex/dawnblade.png" alt="" loading="lazy"></div>
+      <div><div class="item-name">Şafak Kılıcı</div><span class="rtag r-epic">epic</span><div class="item-sub">Gezgin Kılıcı + Şafak Çekirdeği + Ametist Mercek · Alevden Çehre I</div></div>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:var(--space-5)">
+    <div class="card">
+      <div class="class-top" style="margin-bottom:var(--space-2)">
+        <div class="class-ico"><img class="px" src="img/tex/miner_hammer.png" alt="" loading="lazy"></div>
+        <div><h3 style="margin:0">Madenci Çekici</h3><span class="rtag r-uncommon">uncommon</span></div>
+      </div>
+      <p>Dönüştürme: Demir Kazma + Demir Blok. Tek vuruşta 3x3 alan kazır. Madenci sınıfının imza aleti.</p>
+    </div>
+    <div class="card">
+      <div class="class-top" style="margin-bottom:var(--space-2)">
+        <div class="class-ico"><img class="px" src="img/tex/farmer_scythe.png" alt="" loading="lazy"></div>
+        <div><h3 style="margin:0">Çiftçi Tırpanı</h3><span class="rtag r-uncommon">uncommon</span></div>
+      </div>
+      <p>Dönüştürme: Demir Çapa + Sağlam İp. Ekin hasadının ana aleti, +5 saldırı hasarı verir.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 ZIRH -->
+<section id="zirh">
+  <div class="sec-head">
+    <span class="sec-idx">06 / Zırh Setleri</span>
+    <h2>Dört parçayı tamamla, bonusu kap</h2>
+    <p>Her setin dört parçasını birden giydiğinde set bonusu otomatik aktifleşir. Bonuslar karakter ekranında görünür, parça çıkarınca kaybolur.</p>
+  </div>
+  <div class="grid g3">
+    <div class="card set-card">
+      <div>
+        <h3>Çiftçi Seti <span class="rtag r-uncommon" style="margin-left:6px">uncommon</span></h3>
+        <p style="margin-top:4px">Deri + Buğday ile craftlanır. Toprağı işleyene bereket.</p>
+      </div>
+      <div class="set-pieces">
+        <div class="item-ico"><img class="px" src="img/tex/farmer_helmet.png" alt="Şapka" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/farmer_chestplate.png" alt="Yelek" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/farmer_leggings.png" alt="Pantolon" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/farmer_boots.png" alt="Çizme" loading="lazy"></div>
+      </div>
+      <div class="bonus">
+        <div><span>Şans</span><span class="val">+2</span></div>
+        <div><span>Hareket Hızı</span><span class="val">+%2</span></div>
+        <div><span>Etkileşim Mesafesi</span><span class="val">+1.5 blok</span></div>
+        <div><span>Zırh</span><span class="val">+2</span></div>
+      </div>
+    </div>
+    <div class="card set-card">
+      <div>
+        <h3>Kaşif Seti <span class="rtag r-rare" style="margin-left:6px">rare</span></h3>
+        <p style="margin-top:4px">Demir + Zincir (+ Sağlam İp) ile craftlanır. Yolda kalan kazanır.</p>
+      </div>
+      <div class="set-pieces">
+        <div class="item-ico"><img class="px" src="img/tex/scout_helmet.png" alt="Miğfer" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/scout_chestplate.png" alt="Göğüslük" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/scout_leggings.png" alt="Tozluk" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/scout_boots.png" alt="Bot" loading="lazy"></div>
+      </div>
+      <div class="bonus">
+        <div><span>Hareket Hızı</span><span class="val">+%4</span></div>
+        <div><span>Maks. Can</span><span class="val">+4 (2 kalp)</span></div>
+        <div><span>Güvenli Düşüş</span><span class="val">+6 blok</span></div>
+        <div><span>Adım Yüksekliği</span><span class="val">+0.6</span></div>
+      </div>
+    </div>
+    <div class="card set-card">
+      <div>
+        <h3>Şafak Seti <span class="rtag r-epic" style="margin-left:6px">epic</span></h3>
+        <p style="margin-top:4px">Elmas + Ametist Mercek (+ Şafak Çekirdeği göğüslükte). Sunucunun zirvesi.</p>
+      </div>
+      <div class="set-pieces">
+        <div class="item-ico"><img class="px" src="img/tex/dawn_helmet.png" alt="Miğfer" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/dawn_chestplate.png" alt="Göğüslük" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/dawn_leggings.png" alt="Tozluk" loading="lazy"></div>
+        <div class="item-ico"><img class="px" src="img/tex/dawn_boots.png" alt="Bot" loading="lazy"></div>
+      </div>
+      <div class="bonus">
+        <div><span>Saldırı Hasarı</span><span class="val">+3</span></div>
+        <div><span>Maks. Can</span><span class="val">+6 (3 kalp)</span></div>
+        <div><span>Zırh + Sertlik</span><span class="val">+4 / +2</span></div>
+        <div><span>Savurma Direnci</span><span class="val">+%25</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 DEMİRCİ -->
+<section id="demirci">
+  <div class="sec-head">
+    <span class="sec-idx">07 / Demirci</span>
+    <h2>Paranın geçtiği yer: /demirci</h2>
+    <p>Marketten kazandığın parayla malzeme, yemek ve zırh satın al. Şafak Kılıcı yükseltmesi de burada: kılıcını ve çekirdeğini ver, 1500 ₺ karşılığı Şafak Kılıcı'nı al.</p>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Kategori</th><th>Ürün</th><th>Fiyat</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="4"><b>Malzeme</b></td><td><img class="px t-ico" src="img/tex/tough_cord.png" alt="" loading="lazy">Sağlam İp</td><td class="num">75 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/whetstone.png" alt="" loading="lazy">Bileme Taşı</td><td class="num">100 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/amethyst_lens.png" alt="" loading="lazy">Ametist Mercek</td><td class="num">400 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/dawn_core.png" alt="" loading="lazy">Şafak Çekirdeği</td><td class="num">5.000 ₺</td></tr>
+        <tr><td rowspan="5"><b>Yemek</b></td><td><img class="px t-ico" src="img/tex/pizza.png" alt="" loading="lazy">Pizza Dilimi</td><td class="num">100 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/grape_juice.png" alt="" loading="lazy">Üzüm Suyu</td><td class="num">120 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/grilled_corn.png" alt="" loading="lazy">Közlenmiş Mısır</td><td class="num">150 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/pepper_stew.png" alt="" loading="lazy">Biber Yahnisi</td><td class="num">150 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/strawberry_tart.png" alt="" loading="lazy">Çilekli Turta</td><td class="num">180 ₺</td></tr>
+        <tr><td rowspan="3"><b>Zırh (parça)</b></td><td><img class="px t-ico" src="img/tex/farmer_chestplate.png" alt="" loading="lazy">Çiftçi seti</td><td class="num">500 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/scout_chestplate.png" alt="" loading="lazy">Kaşif seti</td><td class="num">800 ₺</td></tr>
+        <tr><td><img class="px t-ico" src="img/tex/dawn_chestplate.png" alt="" loading="lazy">Şafak seti</td><td class="num">1.500 ₺</td></tr>
+        <tr><td><b>Yükseltme</b></td><td><img class="px t-ico" src="img/tex/dawnblade.png" alt="" loading="lazy">Şafak Kılıcı <span style="color:var(--faint)">(Gezgin Kılıcı + Çekirdek teslim edilir)</span></td><td class="num">1.500 ₺</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note"><b>Ekonomi döngüsü:</b> Ekinini topla → mutfağa çevir → demircide malzeme al → silah/zırh ilerlet. Oyuncu marketleri için <span class="cmd">QuickShop</span>: sandık + tabela ile kendi dükkanını kur.</div>
+</section>
+
+<!-- 08 RPG -->
+<section id="rpg">
+  <div class="sec-head">
+    <span class="sec-idx">08 / RPG ve Beceriler</span>
+    <h2>13 beceri dalı, alet kalitesine göre XP</h2>
+    <p>ValhallaMMO her işi ayrı beceriyle takip eder: maden kaz, ağaç kes, balık tut, iksir kaynat. Seviye atlarken beceri puanı kazanır, pasiflerin güçlenir.</p>
+  </div>
+  <div class="skill-grid">
+    <span class="skill">mining<small>Madencilik</small></span>
+    <span class="skill">digging<small>Kazı</small></span>
+    <span class="skill">woodcutting<small>Odunculuk</small></span>
+    <span class="skill">farming<small>Çiftçilik</small></span>
+    <span class="skill">fishing<small>Balıkçılık</small></span>
+    <span class="skill">alchemy<small>Simya</small></span>
+    <span class="skill">smithing<small>Demircilik</small></span>
+    <span class="skill">enchanting<small>Büyücülük</small></span>
+    <span class="skill">archery<small>Okçuluk</small></span>
+    <span class="skill">light_weapons<small>Hafif Silah</small></span>
+    <span class="skill">heavy_weapons<small>Ağır Silah</small></span>
+    <span class="skill">light_armor<small>Hafif Zırh</small></span>
+    <span class="skill">heavy_armor<small>Ağır Zırh</small></span>
+  </div>
+  <h3 style="margin-top:var(--space-6);font-size:17px">Alet seviyesi XP çarpanı</h3>
+  <p style="color:var(--muted);font-size:14px;margin-top:var(--space-1)">Elindeki aletin malzemesi, topladığın beceri XP'sini doğrudan çarpar. Netherite kazma elle kazmaktan iki kat değerli.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Alet Malzemesi</th><th>XP Çarpanı</th><th>Örnek</th></tr></thead>
+      <tbody>
+        <tr><td>Elle (aletsiz)</td><td class="num">×0.85</td><td>Yumrukla toprak kazmak</td></tr>
+        <tr><td>Tahta</td><td class="num">×0.90</td><td>Tahta kazma</td></tr>
+        <tr><td>Taş</td><td class="num">×1.00</td><td>Taş balta</td></tr>
+        <tr><td>Altın</td><td class="num">×1.00</td><td>Altın çapa</td></tr>
+        <tr><td>Demir</td><td class="num">×1.15</td><td>Demir kazma</td></tr>
+        <tr><td>Elmas</td><td class="num">×1.40</td><td>Elmas kazma</td></tr>
+        <tr><td>Netherite</td><td class="num">×1.70</td><td>Netherite kazma</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note"><b>Geçerli olduğu beceriler:</b> Madencilik, Kazı, Odunculuk ve Çiftçilik. Çarpan, aletin malzemesine göre ana elindeki kazma/balta/kürek/çapa üzerinden hesaplanır.</div>
+</section>
+
+<!-- 09 KOMUTLAR -->
+<section id="komutlar">
+  <div class="sec-head">
+    <span class="sec-idx">09 / Komutlar</span>
+    <h2>Bilmen gereken her komut</h2>
+    <p>Sunucuya özel menüler üstte, genel survival komutları altta.</p>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Kategori</th><th>Komut</th><th>Ne yapar</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3"><b>Menüler</b></td><td><span class="cmd">/sinif</span></td><td>Sınıf seçimi ve başlangıç seti</td></tr>
+        <tr><td><span class="cmd">/karakter</span></td><td>Karakter özeti ve sınıf yenileme</td></tr>
+        <tr><td><span class="cmd">/demirci</span></td><td>Malzeme/yemek/zırh marketi ve silah yükseltme</td></tr>
+        <tr><td rowspan="2"><b>Hesap</b></td><td><span class="cmd">/register &lt;şifre&gt; &lt;şifre&gt;</span></td><td>İlk girişte hesap kaydı</td></tr>
+        <tr><td><span class="cmd">/login &lt;şifre&gt;</span></td><td>Giriş yap</td></tr>
+        <tr><td rowspan="4"><b>Işınlanma</b></td><td><span class="cmd">/sethome</span> · <span class="cmd">/home</span></td><td>Ev kur ve dön (en fazla 3)</td></tr>
+        <tr><td><span class="cmd">/spawn</span></td><td>Doğuş noktasına dön</td></tr>
+        <tr><td><span class="cmd">/tpa &lt;oyuncu&gt;</span></td><td>Işınlanma isteği gönder</td></tr>
+        <tr><td><span class="cmd">/back</span></td><td>Ölüm/ışınlanma öncesi konuma dön</td></tr>
+        <tr><td rowspan="3"><b>Ekonomi</b></td><td><span class="cmd">/balance</span></td><td>Parana bak</td></tr>
+        <tr><td><span class="cmd">/pay &lt;oyuncu&gt; &lt;miktar&gt;</span></td><td>Para gönder</td></tr>
+        <tr><td><span class="cmd">/balancetop</span></td><td>En zenginler sıralaması</td></tr>
+        <tr><td rowspan="4"><b>Sosyal</b></td><td><span class="cmd">/party &lt;oyuncu&gt;</span></td><td>Parti kur, XP ve sohbet paylaş</td></tr>
+        <tr><td><span class="cmd">/skin &lt;isim&gt;</span></td><td>Skin değiştir (crack dostu)</td></tr>
+        <tr><td><span class="cmd">/trust &lt;oyuncu&gt;</span></td><td>Claimine arkadaş ekle</td></tr>
+        <tr><td><span class="cmd">/afk</span></td><td>AFK moduna geç</td></tr>
+        <tr><td rowspan="3"><b>Eğlence</b></td><td><span class="cmd">/sit</span> · <span class="cmd">/lay</span> · <span class="cmd">/crawl</span></td><td>Otur, uzan, emekle</td></tr>
+        <tr><td><span class="cmd">/veinminer toggle</span></td><td>Damar kazısını aç/kapat</td></tr>
+        <tr><td><span class="cmd">/skills</span></td><td>Beceri seviyelerine bak</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 10 KURALLAR -->
+<section id="kurallar">
+  <div class="sec-head">
+    <span class="sec-idx">10 / Kurallar</span>
+    <h2>Sunucu kuralları</h2>
+    <p>Herkesin keyfi için basit ve net. Kural ihlali uyarı, geçici yasak veya kalıcı yasakla sonuçlanır.</p>
+  </div>
+  <ol class="rules">
+    <li><span><b>Hile ve hack yasak.</b> X-ray, killaura, fly, otomatik tıklayıcı dahil her türlü istemci hilesi kalıcı yasak sebebidir. GrimAC aktif izler.</span></li>
+    <li><span><b>Grief yasak.</b> Başkasının yapısını kırma, değiştirme, çalma. Claimlenmemiş alanlar da sahipli sayılır.</span></li>
+    <li><span><b>Hırsızlık yasak.</b> Kilitlenmemiş sandık bulsan bile içinden izinsiz eşya alma.</span></li>
+    <li><span><b>Hakaret, ırkçılık, ayrımcılık yasak.</b> Sohbette ve tabela/isimlerde.</span></li>
+    <li><span><b>Reklam yasak.</b> Başka sunucu adı, IP'si veya daveti paylaşma.</span></li>
+    <li><span><b>Bug suistimali yasak.</b> Bulduğun hatayı yetkiliye bildir, kopyalamak için kullanma. Kullananın eşyaları silinir.</span></li>
+    <li><span><b>Lag makinesi ve devasa redstone saatleri yasak.</b> Sunucu performansı hepimizin.</span></li>
+    <li><span><b>Spawn çevresi kutsal.</b> Spawn bölgesine yapı inşa etme, sandık koyma, hayvan biriktirme.</span></li>
+    <li><span><b>Çoklu hesapla kural aşmak yasak.</b> Yasaklı oyuncunun alternatifi tespit edilirse ikisi de uzatılır.</span></li>
+    <li><span><b>Son karar yetkilinindir.</b> İtirazın varsa kavgayla değil, özelden kanıtla gel.</span></li>
+  </ol>
+</section>
+
+<!-- 11 SSS -->
+<section id="sss">
+  <div class="sec-head">
+    <span class="sec-idx">11 / SSS</span>
+    <h2>Sık sorulan sorular</h2>
+  </div>
+  <div class="faq">
+    <details>
+      <summary>Hangi sürümlerle girebilirim?</summary>
+      <div class="a">Sunucu Leaf 1.21.11 çekirdeğinde çalışır; ViaVersion sayesinde <b>1.16 ile 1.21.x</b> arasındaki her Java sürümüyle girebilirsin. En iyi deneyim için 1.21.x önerilir.</div>
+    </details>
+    <details>
+      <summary>Crack (korsan) hesabım var, girebilir miyim?</summary>
+      <div class="a">Evet, sunucu offline moddadır. Girdikten sonra <code>/register şifre şifre</code> ile hesabını kendine kilitle. Şifren olmadan kimse senin adınla giremez.</div>
+    </details>
+    <details>
+      <summary>Kaynak paketini elle kurmam gerekiyor mu?</summary>
+      <div class="a">Hayır. Sunucuya girerken paketi otomatik indirirsin; özel ekinler, yemekler ve zırhlar böylece doğru görünür. "İndir" istemini kabul etmen yeterli.</div>
+    </details>
+    <details>
+      <summary>Özel tohumları nereden bulurum?</summary>
+      <div class="a">Çim kırdığında düşebilir, balık tutarken ve zindan sandıklarında çıkabilir. Elindeki ürünü craft masasına koyarak da <b>2 tohum</b> elde edersin. Bir kez tohum tuttun mu ekin döngüsü kendi kendini besler.</div>
+    </details>
+    <details>
+      <summary>Ekini erken kırarsam ne olur?</summary>
+      <div class="a">Olgunlaşmamış ekin yalnızca <b>1 tohum</b> geri verir, ürün düşmez. Olgun ekin 1-3 ürün + 1-2 tohum verir. Beklemek her zaman kârlı.</div>
+    </details>
+    <details>
+      <summary>Sınıfımı değiştirebilir miyim?</summary>
+      <div class="a"><code>/sinif</code> menüsü 24 saatte bir yeni set verir. Sınıf değiştirmek mevcut eşyalarını silmez; sadece yeni sınıfın setini ve pasifini alırsın. Pasif efektleri menüdeki iksir butonlarıyla bedavaya tazeleyebilirsin.</div>
+    </details>
+    <details>
+      <summary>Şafak Çekirdeği nasıl bulunur?</summary>
+      <div class="a">Seviye 20 üzeri düşmanca canavarlar %2 ihtimalle, seviye 40 üzeri %6 ihtimalle düşürür. Spawnerdan gelen moblardan düşmez. Alternatifi demircide <b>5.000 ₺</b>.</div>
+    </details>
+    <details>
+      <summary>Set bonusu neden çalışmıyor?</summary>
+      <div class="a">Bonus yalnızca setin <b>4 parçası birden</b> üzerindeyken aktiftir. Bir parçayı çıkarınca bonus anında kaybolur. Durumunu <code>/skills</code> ve karakter ekranından kontrol edebilirsin.</div>
+    </details>
+    <details>
+      <summary>Ölünce eşyalarım ne oluyor?</summary>
+      <div class="a">Eşyaların bir mezara (death chest) dönüşür; yalnızca sen alabilirsin, lavda yanmaz ve bir süre kaybolmaz. Ölüm koordinatın sohbette yazılır, <code>/back</code> ile de dönebilirsin.</div>
+    </details>
+    <details>
+      <summary>Evimi nasıl korurum?</summary>
+      <div class="a">Altın kürekle köşegen iki köşeye sağ tıklayarak claim oluştur. <code>/trust</code> ile arkadaşlarına yetki ver, <code>/containertrust</code> ile sadece sandık erişimi aç.</div>
+    </details>
+    <details>
+      <summary>Telefonda (Bedrock) oynayabilir miyim?</summary>
+      <div class="a">Şu an hayır. Bedrock köprüsü bir süreliğine devre dışı; yalnızca Java Edition istemcileri girebilir.</div>
+    </details>
+    <details>
+      <summary>Sesli sohbet var mı?</summary>
+      <div class="a">Sesli sohbet sistemi şu an devre dışı. Güncel durumu yetkili duyurularından takip et.</div>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>NIXAMC WIKI · 2026</span>
+    <span>91.98.80.233:25678 · LEAF 1.21.11</span>
+    <a href="https://github.com/nixaut-codelabs/nixamc-wiki" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast">IP kopyalandı</div>
+
+<script>
+(function(){
+  var toast=document.getElementById('toast');var tId;
+  document.querySelectorAll('[data-copy]').forEach(function(el){
+    el.addEventListener('click',function(){
+      var text=el.getAttribute('data-copy');
+      var done=function(){toast.classList.add('show');clearTimeout(tId);tId=setTimeout(function(){toast.classList.remove('show');},1800);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,done);}
+      else{
+        var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}
+        document.body.removeChild(ta);done();
       }
-      setTimeout(function() { btn.innerText = 'IP Adresini Kopyala'; }, 1800);
-      document.body.removeChild(input);
-    }
-  </script>
+    });
+  });
+  var links=[].slice.call(document.querySelectorAll('#navLinks a'));
+  var map={};links.forEach(function(a){var id=a.getAttribute('href').slice(1);map[id]=a;});
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(a){a.classList.remove('active');});
+          if(map[en.target.id])map[en.target.id].classList.add('active');
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px'});
+    document.querySelectorAll('main section').forEach(function(s){obs.observe(s);});
+  }
+})();
+</script>
 </body>
 </html>
